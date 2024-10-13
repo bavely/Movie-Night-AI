@@ -1,0 +1,35 @@
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Aref Ruqaa Ink', serif;
+font-family: 'Roboto Mono', monospace;
+}
+html {
+
+  scroll-behavior: smooth;
+
+}
+
+body {
+  margin: 0;
+padding: 0;
+background: linear-gradient(
+  rgba(0, 0, 0, 0.4),
+  rgba(0, 0, 0, 0.4)
+),
+url(./assets/images/3d-grunge-room-interior-with-spotlight-smoky-atmosphere-background.jpg) no-repeat center center fixed;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+height: 100%;
+min-height: fit-content;
+background-attachment: fixed;
+overflow-x: hidden;
+
+}
+
+

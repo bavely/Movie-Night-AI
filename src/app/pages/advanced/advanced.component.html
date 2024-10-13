@@ -1,0 +1,87 @@
+<section class="bg-gray-800 bg-opacity-50 flex flex-row mb-5 " style="height: 200px;">
+  <div class="basis-1 rounded-full self-center  m-10 p-10" >
+<!-- Nave bar Placeholder -->
+
+  </div>
+
+  <div
+    class="h-20 self-center rounded-full border-4 shadow-white/50 shadow-xl max-w-20 w-20 m-6 flex justify-center basis-1/4 heading"
+  >
+    <svg
+      class="self-center"
+      width="400"
+      height="400"
+      viewBox="75 50 350 400"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <!-- First text -->
+      <text fill="white" font-size="20px">
+        <tspan x="64%" y="45%" class="self-center">IT'S</tspan>
+      </text>
+
+      <!-- Second text -->
+      <text fill="white">
+        <tspan x="27%" y="60%" class="heading self-center">MOVIE NIGHT</tspan>
+      </text>
+
+      <!-- Image (Make sure the png variable is defined in your component's TS file) -->
+      <image
+        href="assets/images/i22.png"
+        type="png"
+        height="150"
+        width="150"
+        x="50%"
+        y="60%"
+      ></image>
+
+      <defs>
+        <path d="M250,400 a150,150 0 0,1 0,-300a150,150 0 0,1 0,300Z" id="a" />
+      </defs>
+
+      <!-- Text along path -->
+      <g>
+        <text>
+          <textPath xlink:href="#a" fill="white" font-size="30px">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; BUCKLE UP
+          </textPath>
+        </text>
+      </g>
+    </svg>
+  </div>
+  <div class="basis-3/4 flex justify-center self-center mt-3 mb-3">
+    <div
+      class="bg-white shadow-md rounded flex justify-center self-center shadow-lg"
+      id="formContainer"
+      [style.width]="width"
+    >
+      <input
+        class="placeholder:italic h-9 placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-l-md py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-neutral-100 focus:ring-yellow-100 focus:ring-1 sm:text-sm"
+        type="text"
+        placeholder="Search for movies"
+        (click)="clickInside()"
+        [(ngModel)]="inputs"
+      />
+      <div
+        class="w-1/8 h-9 bg-white px-3 pt-1.5 rounded-r-md hover:cursor-pointer hover:bg-zinc-200 text-gray-800 font-semibold border-gray-400 rounded hover:shadow-white hover:shadow-lg " (click)="search()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.7"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+<app-list [list]="data" [loading]="loading"></app-list>

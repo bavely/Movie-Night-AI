@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.heading {
+    @apply text-3xl font-bold;
+    color: whitesmoke;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-shadow: blanchedalmond 1px 0 10px;
+    font-family: 'Aref Ruqaa Ink', serif;
+  font-size: 45px;
+  filter: drop-shadow(0 0 50px rgba(229,231,235,0.5));
+
+  }
+
+
+  .formContainer{
+      color: antiquewhite;
+  }
+
+  .parent[data-isOpen="true"] {
+    width: 500px;
+    height: 50px;
+    background: #d1d1bf;
+  }
+
+
+
+  .parent {
+
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+
+  /* .child {
+    width: 40px;
+    height: 40px;
+    background: #f107a3;
+    border-radius: 50%;
+  } */
+
+  .advsearchbtn{
+    margin-right: auto;
+    margin-left: 1rem;
+  }
+
+  .modesearchbtn{
+    margin-right: 1rem;
+    margin-left: auto;
+  }
+
+  .grenimg:hover{
+cursor: pointer;
+  }
+

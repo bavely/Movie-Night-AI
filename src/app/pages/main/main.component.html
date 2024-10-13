@@ -1,0 +1,105 @@
+
+@if (discoverMore) {
+  <app-category [loading]="loading"  (goBackEvent)="goBackEvent()" [category]="category" [movies]="category === 'popular' ? popularMovies : category === 'top_rated' ? topRatedMovies : category === 'upcoming' ? upcomingMovies : []" />
+} @else {
+  <section class="flex flex-col">
+    <div
+      class="h-48 self-center rounded-full border-4 shadow-white/50 shadow-xl max-w-48 w-48 mt-12 flex justify-center heading"
+    >
+      <svg
+        class="self-center"
+        width="400"
+        height="400"
+        viewBox="75 50 350 400"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- First text -->
+        <text fill="white" font-size="20px">
+          <tspan x="64%" y="45%" class="self-center">IT'S</tspan>
+        </text>
+
+        <!-- Second text -->
+        <text fill="white">
+          <tspan x="27%" y="60%" class="heading self-center">MOVIE NIGHT</tspan>
+        </text>
+
+        <!-- Image (Make sure the png variable is defined in your component's TS file) -->
+        <image
+          href="assets/images/i22.png"
+          type="png"
+          height="150"
+          width="150"
+          x="50%"
+          y="60%"
+        ></image>
+
+        <defs>
+          <path d="M250,400 a150,150 0 0,1 0,-300a150,150 0 0,1 0,300Z" id="a" />
+        </defs>
+
+        <!-- Text along path -->
+        <g>
+          <text>
+            <textPath xlink:href="#a" fill="white" font-size="30px">
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; BUCKLE UP
+            </textPath>
+          </text>
+        </g>
+      </svg>
+    </div>
+    <div
+      class="h-40 self-center max-w-64 w-64 mt-12 flex justify-center formContainer p-5 transition hover:scale-105 hover:cursor-pointer hover:text-black"
+    >
+      <app-searchbar />
+    </div>
+  </section>
+
+
+  <section class="flex flex-col p-5 m-4 justify-center items-center">
+    <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+      <h5 class="text-white text-2xl text-amber-100">Popular Movies</h5>
+      <button class="text-zinc-400 text-sm " (click)="getMoreMovies('popular')">Discover More</button>
+      </div>
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <!-- Loop through items in data -->
+        @if(popularMovies.length > 0) { @for (item of popularMovies; track $index)
+        {
+        <app-moviecontainer [movie]="item"></app-moviecontainer>
+        } }
+      </div>
+    </div>
+    <p-divider />
+
+    <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+      <h5 class="text-white text-2xl text-amber-100">Top Rated Movies</h5>
+      <button class="text-zinc-400 text-sm " (click)="getMoreMovies('top_rated')">Discover More</button>
+      </div>
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <!-- Loop through items in data -->
+        @if(topRatedMovies.length > 0) { @for (item of topRatedMovies; track
+        $index) {
+        <app-moviecontainer [movie]="item"></app-moviecontainer>
+        } }
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+      <h5 class="text-white text-2xl text-amber-100">Upcoming Movies</h5>
+      <button class="text-zinc-400 text-sm " (click)="getMoreMovies('upcoming')">Discover More</button>
+      </div>
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <!-- Loop through items in data -->
+        @if(upcomingMovies.length > 0) { @for (item of upcomingMovies; track
+        $index) {
+        <app-moviecontainer [movie]="item"></app-moviecontainer>
+        } }
+      </div>
+    </div>
+  </section>
+}
+
