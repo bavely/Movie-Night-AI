@@ -1,0 +1,13 @@
+.heading {
+  @apply text-3xl font-bold;
+  color: whitesmoke;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-shadow: blanchedalmond 1px 0 10px;
+  font-family: 'Aref Ruqaa Ink', serif;
+font-size: 45px;
+filter: drop-shadow(0 0 50px rgba(229,231,235,0.5));
+
+}
+
