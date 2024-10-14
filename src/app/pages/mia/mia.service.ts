@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import { RealtimeClient } from '@openai/realtime-api-beta';
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable , forkJoin} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -37,13 +37,13 @@ return completion.choices[0].message.content;
 
 
 
-  getData(keyword: string): Observable<any> {
+  getData(keyword: string[]): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': this.apiKey,
       'Content-Type': 'application/json'
     });
 
-    return this.http.get(`${this.baseUrl}/search/movie?query=${keyword}&include_adult=true&language=en-US&page=1`, { headers })
-  }
+    let requests = keyword.map(k => this.http.get(`${this.baseUrl}/search/movie?query=${k}&include_adult=true&language=en-US&page=1`, { headers }));
+    return forkJoin(requests);  }
 
 }

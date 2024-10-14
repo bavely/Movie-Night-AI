@@ -51,42 +51,66 @@
     </svg>
   </div>
   <div class="basis-3/4 flex justify-center self-center mt-3 mb-3">
-
+    <p-avatar
+    image="assets/images/AI.jpg"
+    styleClass="mr-2"
+    size="xlarge"
+    shape="circle" />
   </div>
 </section>
 
-<section class=" flex flex-row container mx-auto py-6 flex shadow-lg h-full">
+<section class=" flex flex-row container mx-auto py-6 flex shadow-lg ">
+
+    <div class="flex flex-row w-1/4 gap-4 h-auto flex-wrap justify-start items-start overflow-auto" style="max-height: 550px;" >
+
+
+        @for (s of sugestedMovies; track $index) {
+
+          <app-moviecontainer [movie]="s"></app-moviecontainer>
+        }
+
+    </div>
               <!-- Right -->
-              <div class="w-full  flex flex-col">
+              <div class="w-3/4 h-full  flex flex-col bg-zinc-900 " style="border-left: 2px solid black;">
 
                   <!-- Messages -->
-                  <div class="flex-1 overflow-auto min-h-full" style="background-color: transparent">
-                      <div class="py-2 px-3">
-                        <div class="flex mb-2">
-                              <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
+                  <div class="flex-1 overflow-auto p-3 m-3" style="background-color: transparent" id = "msgContainer">
+                      <div class="py-2 px-3 " style="height: 500px;">
+                        @for (m of messages; track $index) {
+                          @if (m.roll == "mia") {
+                            <div class="flex mb-2" >
+                              <div class="rounded py-2 px-3 bg-gray-900 text-white " style="max-width: 50%;">
                                   <p class="text-sm text-teal">
-                                      Sylverter Stallone
+                                      MIA
                                   </p>
                                   <p class="text-sm mt-1">
-                                      Hi everyone! Glad you could join! I am making a new movie.
+                                      {{m.message}}
                                   </p>
                                   <p class="text-right text-xs text-grey-dark mt-1">
-                                      12:45 pm
+                                      {{m.time}}
                                   </p>
                               </div>
                           </div>
-
-
-                          <div class="flex justify-end mb-2">
-                              <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
+                          }@else {
+                            <div class="flex justify-end mb-2" >
+                              <div class="rounded py-2 px-3 bg-fuchsia-950 text-white" style="max-width: 50%;">
+                                <p class="text-sm text-teal">
+                                  Me
+                              </p>
                                   <p class="text-sm mt-1">
-                                      Hi guys.
+                                      {{m.message}}
                                   </p>
                                   <p class="text-right text-xs text-grey-dark mt-1">
-                                      12:45 pm
+                                      {{m.time}}
                                   </p>
                               </div>
                           </div>
+                          }
+                        }
+
+
+
+
 
 
 
@@ -94,11 +118,11 @@
                   </div>
 
                   <!-- Input -->
-                  <div class="bg-grey-lighter px-4 py-4 flex items-center sticky bottom-0 bg-gray-800 text-white">
+                  <div class="bg-grey-lighter px-4 py-4 flex items-center sticky bottom-0 bg-gray-800 text-white ">
                       <div class="flex-1 mx-4">
-                          <input class="w-full border rounded px-2 py-2" type="text"/>
+                          <input class="w-full border rounded px-2 py-2 text-grey-darker" type="text" placeholder="Type a message" [(ngModel)] ="messageInput" style="color: rgb(80, 80, 80);"/>
                       </div>
-                      <div>
+                      <div (click)="sendMessage( messageInput )" class="cursor-pointer">
                       <i class="pi pi-send" style="font-size: 1.5rem; cursor: pointer; color: rgba(255, 255, 255, 0.3)"></i>
                         </div>
                   </div>

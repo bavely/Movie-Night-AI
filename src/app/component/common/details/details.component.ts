@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DetailsService } from './details.service';
 import { TabViewModule } from 'primeng/tabview';
+import dayjs from 'dayjs';
 @Component({
   selector: 'app-details',
   standalone: true,
@@ -41,7 +42,7 @@ export class DetailsComponent {
           this.movieDetails = {
             title : data[0].original_title || "",
             overview : data[0].overview || "",
-            release_date : data[0].release_date || "",
+            release_date : dayjs(data[0].release_date).format("MMM D, YYYY") || "",
             vote_count : data[0].vote_count || "",
             vote_average : data[0].vote_average / 2 || "",
             poster_path : this.postarBaseUrl + data[0].poster_path || "",
