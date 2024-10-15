@@ -81,28 +81,37 @@
   <div class="w-3/4 h-full flex flex-col bg-zinc-900 ">
     <!-- Messages -->
     <div
-      class="flex-1 overflow-auto p-3 m-3"
-      style="background-color: transparent"
-      id="msgContainer"
+      class="flex-1 overflow-auto "
+      style="background-color: transparent;"
+      #chatContainer
     >
       <div class="py-2 px-3" style="height: 500px">
         @for (m of messages; track $index) { @if (m.roll == "mia") {
-        <div class="flex mb-2">
+        <div class="flex mb-5">
           <div
             class="rounded py-2 px-3 bg-gray-900 text-white"
             style="max-width: 50%"
           >
             <p class="text-sm text-teal">MIA</p>
+            @if($index == messages.length - 1 && !isInit) {
+              <om-typewriter
+              [words]="[m.message]"
+              [disableLoop]="true"
+              [writeDelay]="1000"
+            ></om-typewriter>
+            }@else {
             <p class="text-sm mt-1">
               {{ m.message }}
             </p>
+          }
+
             <p class="text-right text-xs text-grey-dark mt-1">
               {{ m.time }}
             </p>
           </div>
         </div>
         }@else {
-        <div class="flex justify-end mb-2">
+        <div class="flex justify-end mb-5">
           <div
             class="rounded py-2 px-3 bg-fuchsia-950 text-white"
             style="max-width: 50%"
@@ -122,7 +131,7 @@
 
     <!-- Input -->
     <div
-      class="bg-grey-lighter px-4 py-4 flex items-center sticky bottom-0 bg-gray-800 text-white"
+      class="bg-grey-lighter px-4 py-4 flex items-center sticky bottom-0 bg-gray-800 text-white mt-3"
     >
       <div class="flex-1 mx-4">
         <input

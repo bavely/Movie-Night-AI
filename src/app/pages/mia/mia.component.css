@@ -1,3 +1,7 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .heading {
   @apply text-3xl font-bold;
   color: whitesmoke;
