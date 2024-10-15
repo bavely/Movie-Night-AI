@@ -42,7 +42,7 @@ export class DetailsComponent {
           this.movieDetails = {
             title : data[0].original_title || "",
             overview : data[0].overview || "",
-            release_date : format(data[0].release_date , "DD/MM/YYYY")|| "",
+            release_date : format(data[0].release_date , 'PP')|| "",
             vote_count : data[0].vote_count || "",
             vote_average : data[0].vote_average / 2 || "",
             poster_path : this.postarBaseUrl + data[0].poster_path || "",
