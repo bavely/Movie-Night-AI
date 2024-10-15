@@ -4,7 +4,8 @@ import {MiaService} from "./mia.service";
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { MoviecontainerComponent } from '../../component/common/moviecontainer/moviecontainer.component';
-import dayjs from 'dayjs';
+import { format } from 'date-fns';
+
 @Component({
   selector: 'app-mia',
   standalone: true,
@@ -19,7 +20,7 @@ export class MiaComponent {
       id : Math.floor(Math.random() * 1000),
       message : "Hello, this is your movie insight assistant or MIA. I am a movie recommendation bot. I can help you to find out what movies you might like. You can ask me about any movie. I can also recommend you some movies. How can I help you?",
       roll: "mia",
-      time: dayjs().format('DD/MM/YYYY h:mm A')
+      time: format(new Date(), 'DD/MM/YYYY h:mm A')
     }
   ]
   sugestedMovies: any[] = []
@@ -75,7 +76,7 @@ async callOpenAi (ms: string) {
 
     this.messages = [...JSON.parse(localStorage.getItem('messages')!), {
       id: Math.floor(Math.random() * 1000),
-      message: mas, roll: "mia", time: dayjs().format('DD/MM/YYYY h:mm A')
+      message: mas, roll: "mia", time: format(new Date(), 'DD/MM/YYYY h:mm A')
     }]
       localStorage.setItem('messages', JSON.stringify(this.messages))
   })
@@ -84,7 +85,7 @@ async callOpenAi (ms: string) {
    sendMessage(m: string) {
     this.messages = [...this.messages, {
       id: Math.floor(Math.random() * 1000),
-       message: m, roll: "user", time: dayjs().format('DD/MM/YYYY h:mm A')}]
+       message: m, roll: "user", time: format(new Date(), 'DD/MM/YYYY h:mm A')}]
    localStorage.setItem('messages', JSON.stringify(this.messages))
 
    this.callOpenAi(m)
