@@ -89,7 +89,7 @@ isInit = true;
 
     await this.mianservice.openAiCall(prompt).then(mas => {
       this.isInit = false;
-      this.handleMoviesSearch(mas || "");
+      this.handleMoviesSearch(mas ?? "");
 
       this.messages = [
         ...this.messages,
