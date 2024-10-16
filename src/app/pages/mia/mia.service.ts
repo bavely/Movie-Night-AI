@@ -10,8 +10,9 @@ import { Observable , forkJoin} from 'rxjs';
 export class MiaService {
 
   private baseUrl = 'https://api.themoviedb.org/3';
-  private apiKey = import.meta.env['NG_APP_TMDB_API_KEY'];
   private openaiKey = import.meta.env['NG_APP_OPEN_AI_KEY'];
+  private apiKey = import.meta.env['NG_APP_TMDB_API_KEY'];
+
   constructor (private http: HttpClient){}
 
   async openAiCall( prompt: string) {
