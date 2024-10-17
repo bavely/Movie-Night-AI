@@ -3,20 +3,25 @@
 }@else {
 
 <section class="details-container">
-
   <div class="backdrop-container">
-    <img [src]="movieDetails.backdrop_path ? movieDetails.backdrop_path : 'assets/images/no-poster-available.webp'"
-    [alt]="movieDetails.title"  class="backdrop-image "/>
+    <img
+      [src]="
+        movieDetails.backdrop_path
+          ? movieDetails.backdrop_path
+          : 'assets/images/no-poster-available.webp'
+      "
+      [alt]="movieDetails.title"
+      class="backdrop-image"
+    />
   </div>
 
   <div class="details-content">
-
     <p class="font-bold truncate mt-5 text-white text-2xl">
       {{ movieDetails.title }}
     </p>
     <p class="text-white text-opacity-50 text-sm">
-      {{ movieDetails.release_date }}  |  {{ movieDetails.length }}  |
-      {{ movieDetails.certification }}  |
+      {{ movieDetails.release_date }} | {{ movieDetails.length }} |
+      {{ movieDetails.certification }} |
       <p-rating
         class="custom-rate"
         iconCancelClass="pi pi-times"
@@ -27,19 +32,44 @@
       />
       {{ movieDetails.vote_count | number }} Votes
     </p>
-   <div class="flex flex-row gap-2 flex-wrap mt-3"> @for( g of movieDetails.genres; track $index  ){
-      <p class="text-white text-opacity-50 text-xs bg-zinc-900  text-center p-2 rounded rounded-full" > {{ g }} </p>
-    }</div>
+    <div class="flex flex-row gap-2 flex-wrap mt-3">
+      @for( g of movieDetails.genres; track $index ){
+      <p
+        class="text-white text-opacity-50 text-xs bg-zinc-900 text-center p-2 rounded rounded-full"
+      >
+        {{ g }}
+      </p>
+      }
+    </div>
 
-    <p class="text-white  text-sm my-4 text-wrap">{{ movieDetails.overview }}</p>
-    <p class="text-white text-opacity-50 text-sm truncate">Cast: {{ movieDetails.cast.join(', ') }}  </p> <span class="text-white text-opacity-50 text-sm truncate"><button class="text-zinc-400 text-sm" (click)="showMoreCast()"> Show More</button></span>
-<button class=" text-sm w-24 mt-3 bg-zinc-900 bg-opacity-50 hover:bg-zinc-800 text-white font-semibold py-2 px-4 rounded" (click)="watchTrailer()">TRAILER</button>
+    <p class="text-white text-sm my-4 text-wrap">{{ movieDetails.overview }}</p>
+    <p class="text-white text-opacity-50 text-sm truncate">
+      Cast: {{ movieDetails.cast.join(", ") }}
+    </p>
+    <span class="text-white text-opacity-50 text-sm truncate"
+      ><button class="text-zinc-400 text-sm" (click)="showMoreCast()">
+        Show More
+      </button></span
+    >
+    <button
+      class="text-sm w-24 mt-3 bg-zinc-900 bg-opacity-50 hover:bg-zinc-800 text-white font-semibold py-2 px-4 rounded"
+      (click)="watchTrailer()"
+    >
+      TRAILER
+    </button>
   </div>
-
 </section>
 
-<app-cast [cast]="movieDetails.cast" [open]="castOpen" (closeEvent)="castOpen = false" />
-<app-videos [videos]="movieDetails.videos" [open]="videoOpen" (closeEvent)="videoOpen = false" />
+<app-cast
+  [cast]="movieDetails.cast"
+  [open]="castOpen"
+  (closeEvent)="castOpen = false"
+/>
+<app-videos
+  [videos]="movieDetails.videos"
+  [open]="videoOpen"
+  (closeEvent)="videoOpen = false"
+/>
 
 <app-list [list]="movieDetails.similar" [loading]="loading"></app-list>
 }
