@@ -4,8 +4,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Aref Ruqaa Ink', serif;
-font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto", sans-serif;
+
+  /* font-family: 'Aref Ruqaa Ink', serif;
+  font-family: 'Roboto Mono', monospace; */
+
 }
 html {
 
@@ -31,5 +34,7 @@ background-attachment: fixed;
 overflow-x: hidden;
 
 }
+
+
 
 

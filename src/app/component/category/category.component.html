@@ -1,25 +1,10 @@
-<section class="bg-gray-800 bg-opacity-50 flex flex-row mb-5">
-  <div class="basis-1 rounded-full self-center shadow-white/50 shadow-lg m-4 p-4 transition hover:scale-120 hover:cursor-pointer hover:bg-zinc-800 hover:text-black" (click)="goBack()">
+<section  class="bg-gray-800 bg-opacity-90 flex flex-row mb-5 z-30 sticky top-0" style="height: 200px;">
+  <div class="basis-1 rounded-full self-center  m-10 p-10" >
+    <!-- Nave bar Placeholder -->
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="white"
-      class="size-5"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-      />
-    </svg>
-
-  </div>
-
+      </div>
   <div
-    class="h-28 self-center rounded-full border-4 shadow-white/50 shadow-xl max-w-28 w-20 m-6 flex justify-center basis-1/4 heading"
+  class="h-20 self-center rounded-full border-4 shadow-white/50 shadow-xl max-w-20 w-20 m-6 flex justify-center basis-1/4 heading"
   >
     <svg
       class="self-center"
@@ -64,7 +49,7 @@
       </g>
     </svg>
   </div>
-  <div class="basis-3/4 flex justify-center self-center">
+  <div class="basis-3/4 flex justify-center self-center mt-3 mb-3">
     <h1 class="text-white text-3xl">{{ category.split('_').join(' ').toLocaleUpperCase() }} MOVIES</h1>
   </div>
 </section>

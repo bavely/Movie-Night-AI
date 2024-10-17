@@ -68,4 +68,12 @@ export class DetailsService {
     })
     return this.http.get(`https://api.themoviedb.org/3/movie/${id}/images?language=en-US`, { headers })
   }
+
+  getCertByRelease(id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': this.apiKey,
+      'Content-Type': 'application/json'
+    })
+    return this.http.get(`https://api.themoviedb.org/3/movie/${id}/release_dates?language=en-US`, { headers })
+  }
 }

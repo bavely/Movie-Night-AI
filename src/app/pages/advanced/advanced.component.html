@@ -43,7 +43,7 @@
       <g>
         <text>
           <textPath xlink:href="#a" fill="white" font-size="30px">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; BUCKLE UP
           </textPath>
         </text>
@@ -84,4 +84,7 @@
     </div>
   </div>
 </section>
-<app-list [list]="data" [loading]="loading"></app-list>
+@if(data.length > 0){
+  <app-list [list]="data" [loading]="loading"></app-list>
+}
+

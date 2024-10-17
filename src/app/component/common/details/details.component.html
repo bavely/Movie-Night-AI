@@ -2,47 +2,44 @@
 <p>Loading...</p>
 }@else {
 
+<section class="details-container">
 
-<section class="movie-info  flex flex-row" [style]="{backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .8)), to(rgba(0, 0, 0, .5))) ,url('+ movieDetails.backdrop_path +')  '}">
-
-  <div class="movie-detail">
-      <h1 class="movie-name">{{movieDetails.title}}</h1>
-      <p class="release-date text-sm text-zinc-400">{{movieDetails.release_date}}</p>
-      <button class="btn btn-primary trailer-btn">Play Trailer</button>
-      <p class="genres">@for( genre of movieDetails.genres; track $index) {
-         {{genre}}
-      }</p>
-
-      <p class="des">{{movieDetails.overview}}.</p>
-      <p class="starring"><span>Starring: @for (a of movieDetails.cast; track $index) {
-        {{a.name}}
-        }</span></p>
+  <div class="backdrop-container">
+    <img [src]="movieDetails.backdrop_path ? movieDetails.backdrop_path : 'assets/images/no-poster-available.webp'"
+    [alt]="movieDetails.title"  class="backdrop-image "/>
   </div>
+
+  <div class="details-content">
+
+    <p class="font-bold truncate mt-5 text-white text-2xl">
+      {{ movieDetails.title }}
+    </p>
+    <p class="text-white text-opacity-50 text-sm">
+      {{ movieDetails.release_date }}  |  {{ movieDetails.length }}  |
+      {{ movieDetails.certification }}  |
+      <p-rating
+        class="custom-rate"
+        iconCancelClass="pi pi-times"
+        [ngModel]="movieDetails.vote_average"
+        [stars]="5"
+        [cancel]="false"
+        [readonly]="true"
+      />
+      {{ movieDetails.vote_count | number }} Votes
+    </p>
+   <div class="flex flex-row gap-2 flex-wrap mt-3"> @for( g of movieDetails.genres; track $index  ){
+      <p class="text-white text-opacity-50 text-xs bg-zinc-900  text-center p-2 rounded rounded-full" > {{ g }} </p>
+    }</div>
+
+    <p class="text-white  text-sm my-4 text-wrap">{{ movieDetails.overview }}</p>
+    <p class="text-white text-opacity-50 text-sm truncate">Cast: {{ movieDetails.cast.join(', ') }}  </p> <span class="text-white text-opacity-50 text-sm truncate"><button class="text-zinc-400 text-sm" (click)="showMoreCast()"> Show More</button></span>
+<button class=" text-sm w-24 mt-3 bg-zinc-900 bg-opacity-50 hover:bg-zinc-800 text-white font-semibold py-2 px-4 rounded" (click)="watchTrailer()">TRAILER</button>
+  </div>
+
 </section>
 
-<section class="flex flex-row justify-center ">
-  <div class="card " [style]="{backgroundColor: 'rgba(0, 0, 0, .5)'}">
-    <p-tabView>
-        <p-tabPanel header="Header I">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </p-tabPanel>
-        <p-tabPanel header="Header II">
-            <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
-                ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-            </p>
-        </p-tabPanel>
-        <p-tabPanel header="Header III">
-            <p>
-                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
-                qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-            </p>
-        </p-tabPanel>
-        <p-tabPanel [disabled]="true" header="Header IV" />
-    </p-tabView>
-</div>
-</section>
+<app-cast [cast]="movieDetails.cast" [open]="castOpen" (closeEvent)="castOpen = false" />
+<app-videos [videos]="movieDetails.videos" [open]="videoOpen" (closeEvent)="videoOpen = false" />
+
+<app-list [list]="movieDetails.similar" [loading]="loading"></app-list>
 }

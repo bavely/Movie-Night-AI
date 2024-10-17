@@ -54,7 +54,7 @@
       <g>
         <text>
           <textPath xlink:href="#a" fill="white" font-size="30px">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; BUCKLE UP
           </textPath>
         </text>
@@ -69,56 +69,65 @@
 </section>
 
 <section class="flex flex-col p-5 m-4 justify-center items-center">
-  <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
-    <div class="flex flex-row gap-4 h-auto flex-wrap">
-      <h5 class="text-white text-2xl text-amber-100">Popular Movies</h5>
-      <button class="text-zinc-400 text-sm" (click)="getMoreMovies('popular')">
-        Discover More
-      </button>
+  @if (popularMovies.length > 0 && topRatedMovies.length > 0 && upcomingMovies.length > 0) {
+    <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <h5 class="text-white text-2xl text-amber-100">Popular Movies</h5>
+        <button class="text-zinc-400 text-sm" (click)="getMoreMovies('popular')">
+          Discover More
+        </button>
+      </div>
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <!-- Loop through items in data -->
+        @if(popularMovies.length > 0) { @for (item of popularMovies; track $index)
+        {
+        <app-moviecontainer [movie]="item"></app-moviecontainer>
+        } }
+      </div>
     </div>
-    <div class="flex flex-row gap-4 h-auto flex-wrap">
-      <!-- Loop through items in data -->
-      @if(popularMovies.length > 0) { @for (item of popularMovies; track $index)
-      {
-      <app-moviecontainer [movie]="item"></app-moviecontainer>
-      } }
-    </div>
-  </div>
-  <p-divider />
+    <p-divider />
 
-  <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
-    <div class="flex flex-row gap-4 h-auto flex-wrap">
-      <h5 class="text-white text-2xl text-amber-100">Top Rated Movies</h5>
-      <button
-        class="text-zinc-400 text-sm"
-        (click)="getMoreMovies('top_rated')"
-      >
-        Discover More
-      </button>
+    <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <h5 class="text-white text-2xl text-amber-100">Top Rated Movies</h5>
+        <button
+          class="text-zinc-400 text-sm"
+          (click)="getMoreMovies('top_rated')"
+        >
+          Discover More
+        </button>
+      </div>
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <!-- Loop through items in data -->
+        @if(topRatedMovies.length > 0) { @for (item of topRatedMovies; track
+        $index) {
+        <app-moviecontainer [movie]="item"></app-moviecontainer>
+        } }
+      </div>
     </div>
-    <div class="flex flex-row gap-4 h-auto flex-wrap">
-      <!-- Loop through items in data -->
-      @if(topRatedMovies.length > 0) { @for (item of topRatedMovies; track
-      $index) {
-      <app-moviecontainer [movie]="item"></app-moviecontainer>
-      } }
-    </div>
-  </div>
 
-  <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
-    <div class="flex flex-row gap-4 h-auto flex-wrap">
-      <h5 class="text-white text-2xl text-amber-100">Upcoming Movies</h5>
-      <button class="text-zinc-400 text-sm" (click)="getMoreMovies('upcoming')">
-        Discover More
-      </button>
+    <div class="flex flex-col gap-4 h-auto flex-wrap my-5">
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <h5 class="text-white text-2xl text-amber-100">Upcoming Movies</h5>
+        <button class="text-zinc-400 text-sm" (click)="getMoreMovies('upcoming')">
+          Discover More
+        </button>
+      </div>
+      <div class="flex flex-row gap-4 h-auto flex-wrap">
+        <!-- Loop through items in data -->
+        @if(upcomingMovies.length > 0) { @for (item of upcomingMovies; track
+        $index) {
+        <app-moviecontainer [movie]="item"></app-moviecontainer>
+        } }
+      </div>
     </div>
-    <div class="flex flex-row gap-4 h-auto flex-wrap">
-      <!-- Loop through items in data -->
-      @if(upcomingMovies.length > 0) { @for (item of upcomingMovies; track
-      $index) {
-      <app-moviecontainer [movie]="item"></app-moviecontainer>
-      } }
-    </div>
-  </div>
+  }@else {
+    <img
+      src="assets/images/popcorn.gif"
+      alt="loading"
+      class=" h-50 w-50  self-center justify-center items-center "
+    />
+  }
+
 </section>
 }
