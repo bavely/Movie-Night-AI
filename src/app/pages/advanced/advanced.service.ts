@@ -18,7 +18,7 @@ export class AdvancedService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get(`${this.baseUrl}/search/movie?query=${keyword}&include_adult=true&language=en-US&page=${page}`, { headers })
+    return this.http.get(`${this.baseUrl}/search/movie?query=${keyword}&include_adult=false&language=en-US&page=${page}`, { headers })
   }
 
 }

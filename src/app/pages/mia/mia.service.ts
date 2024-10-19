@@ -45,7 +45,7 @@ return completion.choices[0].message.content;
       'Content-Type': 'application/json'
     });
 
-    let requests = keyword.map(k => this.http.get(`${this.baseUrl}/search/movie?query=${k}&include_adult=true&language=en-US&page=1`, { headers }));
+    let requests = keyword.map(k => this.http.get(`${this.baseUrl}/search/movie?query=${k}&include_adult=false&language=en-US&page=1`, { headers }));
     return forkJoin(requests);  }
 
 }

@@ -124,7 +124,7 @@ export class MoodService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get(`${this.baseUrl}/discover/movie?include_adult=true&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${grenr}&with_original_language=en`, { headers })
+    return this.http.get(`${this.baseUrl}/discover/movie?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${grenr}&with_original_language=en`, { headers })
   }
 
 }

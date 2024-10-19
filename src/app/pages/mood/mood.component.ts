@@ -5,10 +5,14 @@ import { type Image } from "./mood.interface";
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import {ListComponent} from "../../component/common/list/list.component";
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
 @Component({
   selector: 'app-mood',
   standalone: true,
-  imports: [ListComponent],
+  imports: [ListComponent, CarouselModule, ButtonModule, TagModule],
+  providers: [MoodService],
   templateUrl: './mood.component.html',
   styleUrl: './mood.component.css'
 })
@@ -16,13 +20,13 @@ export class MoodComponent {
 
   public imageList!: Image[];
   isImageLoaded = false;
-
+  responsiveOptions: any[] | undefined;
   onImageLoad() {
     this.isImageLoaded = true;
   }
 
   constructor(private router: Router, private moodserv:MoodService ) {
-    this.imageList = moodserv.getImages();
+    this.imageList = moodserv.getImages()
   }
 
   getMoodMovies(image: Image) {
@@ -44,6 +48,8 @@ export class MoodComponent {
   imagBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
   ngOnInit() {
+
+
     this.loadData();
 this.grenr = localStorage.getItem('mood') ? Number(localStorage.getItem('mood')) : 0;
     this.scrollSubject
@@ -65,6 +71,22 @@ if (this.grenr > 0) {
         console.log(this.data);
         this.loading = false;
       });
+
+      // this.responsiveOptions = [
+      //   {
+      //     breakpoint: '1024px',
+      //     numVisible: 5
+      //   },
+      //   {
+      //     breakpoint: '768px',
+      //     numVisible: 5
+      //   },
+      //   {
+      //     breakpoint: '560px',
+      //     numVisible: 1
+      //   }
+      // ];
+
   }
 
   @HostListener('window:scroll', [])
