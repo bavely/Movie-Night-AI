@@ -1,27 +1,29 @@
-# MovieNight
+# MovieNight 🎬
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
+Movie night is a web app that allows you to search for movies and get sugested movies. You can also get sugested movies based on your previous searchs. Also using AI assistant for movie suggestion.
 
-## Development server
+## How to use
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Install dependencies
 
-## Code scaffolding
+```bash
+npm install
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+2. Run the app
 
-## Build
+```bash
+npm run dev
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+3. Visit http://localhost:4200
 
-## Running unit tests
+4. You can search for movies and get sugested movies. Also using AI assistant for movie suggestion.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Features
 
-## Running end-to-end tests
+- Search for movies
+- Get sugested movies
+- Get sugested movies based on your previous searchs
+- Using AI assistant for movie suggestion
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
