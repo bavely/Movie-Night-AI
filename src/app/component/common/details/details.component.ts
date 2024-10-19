@@ -25,7 +25,13 @@ export class DetailsComponent implements AfterViewInit  {
   loading : boolean = false;
   movieDetails: any;
   postarBaseUrl = 'https://image.tmdb.org/t/p/original'
+  imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
   videos : any[] = []
+  isImageLoaded = false;
+
+  onImageLoad() {
+    this.isImageLoaded = true;
+  }
   constructor(private route: ActivatedRoute, private detailsService: DetailsService) {}
 
   convertHoursToTime(hours: number): string {
@@ -60,7 +66,7 @@ export class DetailsComponent implements AfterViewInit  {
             release_date : new Date(data[0].release_date).getFullYear() || "",
             vote_count : data[0].vote_count || "",
             vote_average : data[0].vote_average / 2 || "",
-            poster_path : this.postarBaseUrl + data[0].poster_path || "",
+            small_poster_path : this.imageBaseUrl + data[0].backdrop_path || "",
             backdrop_path : this.postarBaseUrl + data[0].backdrop_path || "",
             id : data[0].id || "",
             genres : data[0].genres.map((genre : any) => genre.name) ||[],

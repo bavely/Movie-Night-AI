@@ -15,6 +15,11 @@ import {ListComponent} from "../../component/common/list/list.component";
 export class MoodComponent {
 
   public imageList!: Image[];
+  isImageLoaded = false;
+
+  onImageLoad() {
+    this.isImageLoaded = true;
+  }
 
   constructor(private router: Router, private moodserv:MoodService ) {
     this.imageList = moodserv.getImages();
@@ -25,6 +30,7 @@ export class MoodComponent {
     this.data = [];
     this.page = 1;
     this.loadData();
+    localStorage.setItem('mood', this.grenr.toString());
   }
   goBack() {
     this.router.navigate(['/']);
@@ -39,10 +45,10 @@ export class MoodComponent {
 
   ngOnInit() {
     this.loadData();
-
+this.grenr = localStorage.getItem('mood') ? Number(localStorage.getItem('mood')) : 0;
     this.scrollSubject
       .pipe(
-        debounceTime(300), // Prevent too many requests
+        debounceTime(1000), // Prevent too many requests
         switchMap((page) => {
           this.loading = true;
 if (this.grenr > 0) {

@@ -1,8 +1,11 @@
 <div class="flex flex-col">
 
-  <div class="rounded h-50 w-40 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 relative group">
+  <div class="rounded h-50 w-40 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 relative group placeholder" [class.placeholder-loaded] = "isImageLoaded" [style]="{backgroundImage: 'url('+ postarBaseUrl + movie.poster_path +')  '}" >
     <img [src]="movie.poster_path ? imagBaseUrl + movie.poster_path : 'assets/images/no-poster-available.webp'"
-    [alt]="movie.title"  class="rounded h-50 w-40 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 "/>
+    [alt]="movie.title"  class="rounded h-50 w-40 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 image"
+    [class.image-loaded] = "isImageLoaded"
+    loading="lazy"
+    (load)="onImageLoad()"/>
     <div class="rounded-md opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-4 bottom-28 flex justify-center items-end text-xl bg-gray-200 text-black font-semibold" (click)="goToMovie(movie)">Watch Now</div>
   </div>
 

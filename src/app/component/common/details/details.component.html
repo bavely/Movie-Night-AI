@@ -3,7 +3,7 @@
 }@else {
 
 <section class="details-container">
-  <div class="backdrop-container">
+  <div class="backdrop-container placeholder"  [class.placeholder-loaded] = "isImageLoaded"  [style]="{backgroundImage: 'url('+ movieDetails.small_poster_path +')  '}" >
     <img
       [src]="
         movieDetails.backdrop_path
@@ -11,7 +11,10 @@
           : 'assets/images/no-poster-available.webp'
       "
       [alt]="movieDetails.title"
-      class="backdrop-image"
+      class="backdrop-image image"
+      [class.image-loaded] = "isImageLoaded"
+      loading="lazy"
+      (load)="onImageLoad()"
     />
   </div>
 

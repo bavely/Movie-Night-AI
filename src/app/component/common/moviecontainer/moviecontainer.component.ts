@@ -12,7 +12,15 @@ import { Router } from '@angular/router';
 export class MoviecontainerComponent {
 
   @Input() movie: any = {}
-  imagBaseUrl = 'https://image.tmdb.org/t/p/w500';
+
+   imagBaseUrl= 'https://image.tmdb.org/t/p/original'
+   postarBaseUrl = 'https://image.tmdb.org/t/p/w500'
+
+  isImageLoaded = false;
+
+  onImageLoad() {
+    this.isImageLoaded = true;
+  }
 
   constructor( private router: Router) {
 

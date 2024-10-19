@@ -1,12 +1,12 @@
 import { Component,  OnInit} from '@angular/core';
 import { SafeurlPipe } from '../common/safeurl.pipe';
-
 @Component({
   selector: 'app-videos',
   standalone: true,
   imports: [SafeurlPipe],
   templateUrl: './videos.component.html',
-  styleUrl: './videos.component.css'
+  styleUrl: './videos.component.css',
+
 })
 export class VideosComponent implements OnInit {
 

@@ -17,7 +17,7 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 export class AdvancedComponent {
   public wasInside = false;
   public width = '50%';
-
+  totalPages: number = 0;
 
   transition() {
     console.log(this.wasInside)
@@ -51,6 +51,7 @@ export class AdvancedComponent {
 
 
   constructor(private router: Router, private elementRef: ElementRef, private advancedserv: AdvancedService) {
+
   }
 
   goBack() {
@@ -65,11 +66,12 @@ export class AdvancedComponent {
   loading = false;
   inputs = ""
   ngOnInit() {
+   this.keyword = this.inputs ? this.inputs : localStorage.getItem('keyword') ?? '';
     this.loadData();
 
     this.scrollSubject
       .pipe(
-        debounceTime(300), // Prevent too many requests
+        debounceTime(1000), // Prevent too many requests
         switchMap((page) => {
           this.loading = true;
           if (this.keyword !== "") {
@@ -81,11 +83,15 @@ export class AdvancedComponent {
 
         })
       )
-      .subscribe((newData: { results: [] }) => {
+      .subscribe((newData: { results: [], total_pages: number }) => {
+        console.log(newData.total_pages);
+        this.totalPages = newData.total_pages;
         this.data = [...this.data, ...newData.results];
         console.log(this.data);
         this.loading = false;
       });
+
+
   }
 
   @HostListener('window:scroll', [])
@@ -96,6 +102,9 @@ export class AdvancedComponent {
     const max = document.documentElement.scrollHeight || document.body.scrollHeight;
 
     if (pos > max - 100 && !this.loading) {
+      if (this.page >= this.totalPages) {
+        return;
+      }
       this.page++;
       this.scrollSubject.next(this.page);
     }
@@ -106,9 +115,12 @@ export class AdvancedComponent {
   }
 
   search() {
+
     this.keyword = this.inputs;
+    this.data = [];
     this.page = 1;
     this.loadData();
+    localStorage.setItem('keyword', this.keyword);
   }
 
 

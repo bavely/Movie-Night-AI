@@ -53,12 +53,17 @@
   <div class="basis-3/4 flex justify-center self-center mt-3 mb-3 ">
     <div class="flex flex-row gap-4 h-auto flex-wrap  p-5 m-4">
       @for (ima of imageList; track $index) {
+        <div class ="rounded-lg grenimg h-20 w-20 max-w-20 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 hover:text-black placeholder" style="background-color: aliceblue;" [class.placeholder-loaded] = "isImageLoaded">
       <img
         (click)="getMoodMovies(ima)"
-        class="rounded-lg grenimg h-20 w-20 max-w-20 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 hover:text-black"
+        class="rounded-lg grenimg h-20 w-20 max-w-20 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 hover:text-black image"
         [src]="ima.image"
         [alt]="ima.name"
+        [class.image-loaded] = "isImageLoaded"
+        (load)="onImageLoad()"
+        loading="lazy"
       />
+    </div>
       }
     </div>
   </div>
