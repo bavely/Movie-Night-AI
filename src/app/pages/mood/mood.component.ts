@@ -72,20 +72,15 @@ if (this.grenr > 0) {
         this.loading = false;
       });
 
-      // this.responsiveOptions = [
-      //   {
-      //     breakpoint: '1024px',
-      //     numVisible: 5
-      //   },
-      //   {
-      //     breakpoint: '768px',
-      //     numVisible: 5
-      //   },
-      //   {
-      //     breakpoint: '560px',
-      //     numVisible: 1
-      //   }
-      // ];
+      this.responsiveOptions = [
+
+        {
+          breakpoint: '768px',
+          numVisible: 1,
+          numScroll: 1
+        }
+
+      ];
 
   }
 
