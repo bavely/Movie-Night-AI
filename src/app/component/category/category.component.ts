@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input , Output } from '@angular/core';
+import { Component, EventEmitter, Input , Output, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ListComponent } from '../common/list/list.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './category.component.html',
   styleUrl: './category.component.css'
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
 
   @Input() category: string = "";
   @Input() movies: any[] = [];
@@ -17,12 +17,17 @@ export class CategoryComponent {
 
   @Output() goBackEvent = new EventEmitter();
 
-  constructor(private router: Router) { }
+  constructor( private location: Location) { }
 
-  goBack() {
-    this.goBackEvent.emit();
+  ngOnInit(): void {
+    this.location.onUrlChange((url) => {
 
+      if (!url.includes(this.category)) {
+        this.goBackEvent.emit();
 
+      }
+    })
   }
+
 
 }

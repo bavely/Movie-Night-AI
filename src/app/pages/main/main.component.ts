@@ -1,4 +1,6 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { SearchbarComponent } from '../../component/common/searchbar/searchbar.component';
 import { MainService } from './main.service';
 import { MoviecontainerComponent } from '../../component/common/moviecontainer/moviecontainer.component';
@@ -23,7 +25,7 @@ export class MainComponent {
   discoverMore: boolean = false
   category: string = ""
   loading: boolean = false
-  constructor(private mainService: MainService) {
+  constructor(private mainService: MainService, private router: Router, private location: Location) {
 
   }
 
@@ -67,6 +69,7 @@ export class MainComponent {
         .subscribe((newData: { results: [] }) => {
           if (this.category === "popular") {
             this.popularMovies = [...this.popularMovies, ...newData.results];
+
           } else if (this.category === "top_rated") {
             this.topRatedMovies = [...this.topRatedMovies, ...newData.results];
           } else if (this.category === "upcoming") {
@@ -85,6 +88,7 @@ export class MainComponent {
     this.discoverMore = true
     this.category = cat
     this.loadData();
+    this.location.replaceState('/' + cat);
   }
 
   goBackEvent() {

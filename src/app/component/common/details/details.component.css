@@ -53,6 +53,25 @@
         padding-left: 5rem;
         padding-right: 5rem;
 }
+.details-content-mobile{
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .details-content {
+    display: none;
 
 
+  }
+.details-content-mobile{
+  display: block;
+  align-items: left;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        padding: 3rem 2rem;
+        backdrop-filter: blur(5px);
+        background-color: rgba(29, 38, 51, 0.7);
 
+}
+}

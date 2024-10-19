@@ -1,10 +1,13 @@
-<section class="bg-gray-800 bg-opacity-90 flex flex-row z-30 sticky top-0" style="height: 200px;">
+<section
+  class="bg-gray-800 bg-opacity-90 flex flex-col lg:flex-row z-30 lg:sticky lg:top-0"
+  style="min-height: 200px"
+>
   <div class="basis-1 rounded-full self-center m-10 p-10">
-    <!-- Nave bar Placeholder -->
+    <!-- Navbar Placeholder -->
   </div>
 
   <div
-    class="h-20 self-center rounded-full border-4 shadow-white/50 shadow-xl max-w-20 w-20 m-6 flex justify-center basis-1/4 heading"
+    class="h-20 max-h-20 self-center rounded-full border-4 shadow-white/50 shadow-xl max-w-20 w-20 m-6 flex justify-center basis-1/4 heading"
   >
     <svg
       class="self-center"
@@ -24,7 +27,7 @@
         <tspan x="27%" y="60%" class="heading self-center">MOVIE NIGHT</tspan>
       </text>
 
-      <!-- Image (Make sure the png variable is defined in your component's TS file) -->
+      <!-- Image -->
       <image
         href="assets/images/i22.png"
         type="png"
@@ -41,88 +44,73 @@
       <!-- Text along path -->
       <g>
         <text>
-          <textPath xlink:href="#a" fill="white" font-size="30px">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; BUCKLE UP
+          <textPath xlink:href="#a" fill="white" font-size="20px">
+            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; BUCKLE UP
           </textPath>
         </text>
       </g>
     </svg>
   </div>
-  <div class="basis-3/4 flex justify-center self-center mt-3 mb-3">
+
+  <div
+    class="basis-3/4 flex flex-col justify-center self-center items-center mt-3 mb-3"
+  >
     <p-avatar
       image="assets/images/AI.jpg"
       styleClass="mr-2"
       size="xlarge"
       shape="circle"
     />
+    <p class="text-white text-xl">MIA</p>
   </div>
 </section>
 
-<section class="flex flex-row h-full">
-  <div class="flex flex-col w-1/4 gap-4 h-auto pl-2">
-    <div
-      class="flex flex-row gap-4 h-auto flex-wrap h-1/8 justify-center items-center "
-    >
-      <p class="text-white text-2xl text-amber-100">Sugested Movies</p>
-    </div>
-    <div
-      class="flex flex-row gap-4 h-auto flex-wrap h-7/8 justify-center items-center overflow-auto"
-      style="max-height: 573px"
-    >
-      @for (s of sugestedMovies; track $index) {
-
-      <app-moviecontainer [movie]="s"></app-moviecontainer>
-      }
-    </div>
-  </div>
-
-  <!-- Right -->
-  <div class="w-3/4 h-full flex flex-col bg-zinc-900 ">
+<section class="grid lg:grid-cols-2 grid-cols-1">
+  <div class="h-full flex flex-col bg-zinc-900">
     <!-- Messages -->
     <div
-      class="flex-1 overflow-auto "
-      style="background-color: transparent;"
+      class="flex-1 overflow-auto"
+      style="background-color: transparent"
+      style="max-height: 39rem"
       #chatContainer
     >
-      <div class="py-2 px-3" style="height: 500px">
-        @for (m of messages; track $index) { @if (m.roll == "mia") {
+      <div class="py-2 px-3" style="min-height: 500px">
+        @for (m of messages; track $index) { @if (m.roll === "mia") {
         <div class="flex mb-5">
+          <p-avatar
+            image="assets/images/AI.jpg"
+            styleClass="mr-2"
+            shape="circle"
+          ></p-avatar>
           <div
             class="rounded py-2 px-3 bg-gray-900 text-white"
-            style="max-width: 50%"
+            style="max-width: 70%"
           >
-            <p class="text-sm text-teal">MIA</p>
             @if($index == messages.length - 1 && !isInit) {
-              <om-typewriter
+            <om-typewriter
               [words]="[m.message]"
               [disableLoop]="true"
               [writeDelay]="250"
             ></om-typewriter>
             }@else {
-            <p class="text-sm mt-1">
-              {{ m.message }}
-            </p>
-          }
-
-            <p class="text-right text-xs text-grey-dark mt-1">
-              {{ m.time }}
-            </p>
+            <p class="text-sm mt-1">{{ m.message }}</p>
+            }
+            <p class="text-right text-xs text-grey-dark mt-1">{{ m.time }}</p>
           </div>
         </div>
-        }@else {
+        } @else {
         <div class="flex justify-end mb-5">
           <div
             class="rounded py-2 px-3 bg-fuchsia-950 text-white"
-            style="max-width: 50%"
+            style="max-width: 70%"
           >
-            <p class="text-sm text-teal">Me</p>
-            <p class="text-sm mt-1">
-              {{ m.message }}
-            </p>
-            <p class="text-right text-xs text-grey-dark mt-1">
-              {{ m.time }}
-            </p>
+            <p class="text-sm mt-1 max-w-40 truncate">{{ m.message }}</p>
+            <p class="text-right text-xs text-grey-dark mt-1">{{ m.time }}</p>
           </div>
         </div>
         } }
@@ -131,7 +119,7 @@
 
     <!-- Input -->
     <div
-      class="bg-grey-lighter px-4 py-4 flex items-center sticky bottom-0 bg-gray-800 text-white mt-3"
+      class="bg-gray-800 px-4 py-4 flex items-center sticky bottom-0 text-white"
     >
       <div class="flex-1 mx-4">
         <input
@@ -152,6 +140,23 @@
           "
         ></i>
       </div>
+    </div>
+  </div>
+
+  <!-- Right -->
+  <div class="flex flex-col gap-4 h-auto pl-2 flex-wrap">
+    <div class="flex flex-row gap-4 justify-center items-center mt-1">
+      <p class="text-zinc-800 bg-white text-lg text-center p-2 rounded-full">
+        Suggested Movies
+      </p>
+    </div>
+    <div
+      class="flex flex-row gap-4 flex-wrap justify-center items-center overflow-auto"
+      style="max-height: 573px"
+    >
+      @for (s of sugestedMovies; track $index) {
+      <app-moviecontainer [movie]="s"></app-moviecontainer>
+      }
     </div>
   </div>
 </section>

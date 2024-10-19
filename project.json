@@ -1,0 +1,114 @@
+{
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "name": "movie-night",
+  "projectType": "application",
+  "generators": {},
+  "sourceRoot": "src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@ngx-env/builder:application",
+      "options": {
+        "outputPath": "dist/movie-night",
+        "index": "src/index.html",
+        "browser": "src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "public"
+          },
+          {
+            "glob": "favicon.ico",
+            "input": "public"
+          },
+          {
+            "glob": "**/*",
+            "input": "src"
+          }
+        ],
+        "styles": [
+          "src/styles.css",
+          "node_modules/tailwindcss/tailwind.css",
+          "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "node_modules/primeicons/primeicons.css"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "1MB",
+              "maximumError": "1MB"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "1MB",
+              "maximumError": "1MB"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@ngx-env/builder:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "movie-night:build:production"
+        },
+        "development": {
+          "buildTarget": "movie-night:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@ngx-env/builder:extract-i18n"
+    },
+    "test": {
+      "executor": "@ngx-env/builder:karma",
+      "options": {
+        "polyfills": [
+          "zone.js",
+          "zone.js/testing"
+        ],
+        "tsConfig": "tsconfig.spec.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "public"
+          },
+          {
+            "glob": "favicon.ico",
+            "input": "public"
+          },
+          {
+            "glob": "**/*",
+            "input": "src"
+          }
+        ],
+        "styles": [
+          "src/styles.css",
+          "node_modules/tailwindcss/tailwind.css",
+          "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "node_modules/primeicons/primeicons.css"
+        ],
+        "scripts": []
+      }
+    }
+  }
+}

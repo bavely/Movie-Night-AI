@@ -1,5 +1,14 @@
 .smovie-symbols{
   float: left;
-  /* margin-top: 5px; */
   margin-right: 5px;
 }
+
+
+
+@media only screen and (max-width: 600px) {
+  .smovie-symbols{
+    display: none;
+  }
+
+  }
+

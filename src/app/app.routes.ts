@@ -5,5 +5,6 @@ export const routes: Routes = [
   { path: 'advanced', loadComponent: () => import('./pages/advanced/advanced.component').then(m => m.AdvancedComponent) },
   { path: 'mood', loadComponent: () => import('./pages/mood/mood.component').then(m => m.MoodComponent) },
   { path: 'details/:id', loadComponent: () => import('./component/common/details/details.component').then(m => m.DetailsComponent) },
-  { path: 'mia', loadComponent: () => import('./pages/mia/mia.component').then(m => m.MiaComponent) }
+  { path: 'mia', loadComponent: () => import('./pages/mia/mia.component').then(m => m.MiaComponent) },
+  {path: 'category', loadComponent: () => import('./component/category/category.component').then(m => m.CategoryComponent)},
 ];

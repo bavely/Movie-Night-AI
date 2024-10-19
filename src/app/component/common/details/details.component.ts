@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, ViewChild, AfterViewInit  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DetailsService } from './details.service';
@@ -19,15 +19,13 @@ import { ListComponent } from '../list/list.component';
 
 
 
-export class DetailsComponent {
+export class DetailsComponent implements AfterViewInit  {
   castOpen : boolean = false;
   videoOpen : boolean = false;
   loading : boolean = false;
   movieDetails: any;
   postarBaseUrl = 'https://image.tmdb.org/t/p/original'
-  videoBaseUrlp1 = "https://www.youtube.com/embed"
-  videoBaseUrlp2 = "?rel=0&autoplay=1&mute=1"
-  // 'https://www.themoviedb.org/video/play?key='
+  videos : any[] = []
   constructor(private route: ActivatedRoute, private detailsService: DetailsService) {}
 
   convertHoursToTime(hours: number): string {
@@ -69,31 +67,53 @@ export class DetailsComponent {
             length :this.convertHoursToTime(data[0].runtime/60) || "",
             language : data[0].original_language || "",
             similar : data[1].results || [],
-            videos : data[2].results.filter((video : any) => ["Trailer", "Teaser", "Clip", "Featurette"].includes(video.type)   && video.site === "YouTube")[0] ,
+            videos : data[2].results.filter((video : any) => ["Trailer", "Teaser", "Clip", "Featurette"].includes(video.type)   && video.site === "YouTube") || [],
             reviews : data[3].results || [],
             providers : data[4].results.US || [],
-            cast : data[5].cast.sort((a: any, b: any) => a.order
-            - b.order
-          ).map((actor: any) => actor.name) || [],
+            cast : data[5].cast.sort((a: any, b: any) => a.order - b.order).map((cast: any) => cast.name) || [],
+            castDetails : data[5].cast.sort((a: any, b: any) => a.order - b.order) || [],
             images : [...data[6].backdrops, ...data[6].posters, ...data[6].logos]  ,
             certification : data[7].results.find((cert: any) => cert.iso_3166_1 === "US") ? data[7].results.find((cert: any) => cert.iso_3166_1 === "US").release_dates[0].certification   : ""
           };
 
           console.log(this.movieDetails, "movieDetails");
+          this.videos = this.movieDetails.videos
         }
       })
     });
+
   }
 
 
 
+  @ViewChild(CastComponent) castComponent!: CastComponent;
+  @ViewChild(VideosComponent, { static: false }) videosComponent!: VideosComponent;
 
-
-  showMoreCast() {
-    this.castOpen = true
+  ngAfterViewInit() {
+    // Now you can safely access `videosComponent`
+    console.log(this.videosComponent);
+    if (this.videosComponent) {
+      this.videosComponent.videosGetter(this.movieDetails.videos);
+    }
   }
+
   watchTrailer() {
-    this.videoOpen = true
+    if (this.videosComponent) {
+      this.videosComponent.videosGetter(this.movieDetails.videos);
+      this.videoOpen = true;
+    } else {
+      console.error("VideosComponent is not available");
+    }
   }
+  showMoreCast() {
+    if (this.castComponent) {
+      this.castComponent.castGetter(this.movieDetails.castDetails);
+      this.castOpen = true;
+    }
+
+  }
+
+
+
 }
 

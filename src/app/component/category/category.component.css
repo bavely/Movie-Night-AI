@@ -11,3 +11,16 @@ filter: drop-shadow(0 0 50px rgba(229,231,235,0.5));
 
 }
 
+.web-hight{
+  min-height: 200px;
+}
+
+@media only screen and (max-width: 700px) {
+  .placeholder-div{
+    display: none;
+  }
+
+  .web-hight{
+    min-height: 0px;
+  }
+}

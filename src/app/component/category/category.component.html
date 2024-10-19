@@ -1,54 +1,58 @@
-<section  class="bg-gray-800 bg-opacity-90 flex flex-row mb-5 z-30 sticky top-0" style="height: 200px;">
+<section  class="bg-gray-800 bg-opacity-90 flex flex-col lg:flex-row z-30 lg:sticky lg:top-0 web-hight"  >
   <div class="basis-1 rounded-full self-center  m-10 p-10" >
     <!-- Nave bar Placeholder -->
 
       </div>
-  <div
-  class="h-20 self-center rounded-full border-4 shadow-white/50 shadow-xl max-w-20 w-20 m-6 flex justify-center basis-1/4 heading"
-  >
-    <svg
-      class="self-center"
-      width="400"
-      height="400"
-      viewBox="75 50 350 400"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      <div
+      class="h-20 max-h-20 self-center rounded-full border-4 shadow-white/50 shadow-xl max-w-20 w-20 m-6 flex justify-center basis-1/4 heading"
     >
-      <!-- First text -->
-      <text fill="white" font-size="20px">
-        <tspan x="64%" y="45%" class="self-center">IT'S</tspan>
-      </text>
-
-      <!-- Second text -->
-      <text fill="white">
-        <tspan x="27%" y="60%" class="heading self-center">MOVIE NIGHT</tspan>
-      </text>
-
-      <!-- Image (Make sure the png variable is defined in your component's TS file) -->
-      <image
-        href="assets/images/i22.png"
-        type="png"
-        height="150"
-        width="150"
-        x="50%"
-        y="60%"
-      ></image>
-
-      <defs>
-        <path d="M250,400 a150,150 0 0,1 0,-300a150,150 0 0,1 0,300Z" id="a" />
-      </defs>
-
-      <!-- Text along path -->
-      <g>
-        <text>
-          <textPath xlink:href="#a" fill="white" font-size="30px">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; BUCKLE UP
-          </textPath>
+      <svg
+        class="self-center"
+        width="400"
+        height="400"
+        viewBox="75 50 350 400"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- First text -->
+        <text fill="white" font-size="20px">
+          <tspan x="64%" y="45%" class="self-center">IT'S</tspan>
         </text>
-      </g>
-    </svg>
-  </div>
+
+        <!-- Second text -->
+        <text fill="white">
+          <tspan x="27%" y="60%" class="heading self-center">MOVIE NIGHT</tspan>
+        </text>
+
+        <!-- Image -->
+        <image
+          href="assets/images/i22.png"
+          type="png"
+          height="150"
+          width="150"
+          x="50%"
+          y="60%"
+        ></image>
+
+        <defs>
+          <path d="M250,400 a150,150 0 0,1 0,-300a150,150 0 0,1 0,300Z" id="a" />
+        </defs>
+
+        <!-- Text along path -->
+        <g>
+          <text>
+            <textPath xlink:href="#a" fill="white" font-size="20px">
+              &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; BUCKLE UP
+            </textPath>
+          </text>
+        </g>
+      </svg>
+    </div>
   <div class="basis-3/4 flex justify-center self-center mt-3 mb-3">
     <h1 class="text-white text-3xl">{{ category.split('_').join(' ').toLocaleUpperCase() }} MOVIES</h1>
   </div>
