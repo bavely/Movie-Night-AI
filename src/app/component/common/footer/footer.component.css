@@ -4,5 +4,7 @@
   flex-grow: 0;
   background: #eee;
   padding: 3px 15px;
-
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
