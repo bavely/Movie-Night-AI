@@ -2,12 +2,12 @@ import { Component ,OnInit, Renderer2} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavButtonComponent } from './component/common/nav-button/nav-button.component';
 import { trigger, transition, style, animate } from '@angular/animations';
-
+import { FooterComponent } from './component/common/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavButtonComponent],
+  imports: [RouterOutlet, NavButtonComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   animations: [

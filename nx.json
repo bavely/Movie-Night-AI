@@ -29,5 +29,10 @@
     "production": [
       "default"
     ]
+  },
+  "generators": {
+    "@nx/angular:component": {
+      "style": "css"
+    }
   }
 }
