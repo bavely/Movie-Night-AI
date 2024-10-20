@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/61f84a47-57b2-48cc-b5cf-d724100050ab/resourceGroups/pavli/providers/Microsoft.Web/sites/bavely",
+    "appService.deploySubpath": "."
+}
