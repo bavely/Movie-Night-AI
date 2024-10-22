@@ -1,6 +1,7 @@
 import { Component, ViewChild, AfterViewInit  } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, switchMap } from 'rxjs';
 import { DetailsService } from './details.service';
 import { TabViewModule } from 'primeng/tabview';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +13,7 @@ import { ListComponent } from '../list/list.component';
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [ TabViewModule, RatingModule, FormsModule, DecimalPipe, CastComponent, VideosComponent, ListComponent],
+  imports: [ TabViewModule, RatingModule, FormsModule, DecimalPipe, CastComponent, VideosComponent, ListComponent, NgOptimizedImage],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
@@ -24,6 +25,7 @@ export class DetailsComponent implements AfterViewInit  {
   videoOpen : boolean = false;
   loading : boolean = false;
   movieDetails: any;
+  apiKey = import.meta.env['NG_APP_BRAND_FETCH'];
   postarBaseUrl = 'https://image.tmdb.org/t/p/original'
   imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
   videos : any[] = []
@@ -61,6 +63,7 @@ export class DetailsComponent implements AfterViewInit  {
           this.loading = false;
           console.log(data);
           this.movieDetails = {
+            justWatch: [],
             title : data[0].original_title || "",
             overview : data[0].overview || "",
             release_date : new Date(data[0].release_date).getFullYear() || "",
@@ -82,7 +85,16 @@ export class DetailsComponent implements AfterViewInit  {
             certification : data[7].results.find((cert: any) => cert.iso_3166_1 === "US") ? data[7].results.find((cert: any) => cert.iso_3166_1 === "US").release_dates[0].certification   : ""
           };
 
-          console.log(this.movieDetails, "movieDetails");
+
+        this.detailsService.getPricesToWatch(this.movieDetails.title, this.movieDetails.id).subscribe((data) => {
+          let obj : any = {}
+          data.filter((p: any) => p.region === 'US').map((p: { name: string; logo_path: string; provider_name: string; web_url: string; }) =>{
+            obj[p.name] = p
+          });
+          this.movieDetails.justWatch = Object.values(obj);
+          console.log(this.movieDetails, "getPricesToWatch")
+        });
+
           this.videos = this.movieDetails.videos
         }
       })
@@ -108,7 +120,7 @@ export class DetailsComponent implements AfterViewInit  {
       this.videosComponent.videosGetter(this.movieDetails.videos);
       this.videoOpen = true;
     } else {
-      console.error("VideosComponent is not available");
+      console.error("Video is not available");
     }
   }
   showMoreCast() {
@@ -119,7 +131,13 @@ export class DetailsComponent implements AfterViewInit  {
 
   }
 
+domainGetter(domainFull: string) {
+  return domainFull.split("//")[1].split("/")[0];
+}
 
+uniqueId(arr : any[]) {
+  return
 
 }
 
+}

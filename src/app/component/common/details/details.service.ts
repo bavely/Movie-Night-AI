@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-@Injectable ({
+import { forkJoin, Observable, of, switchMap } from 'rxjs';
+@Injectable({
   providedIn: 'root'
 })
 
 export class DetailsService {
   private baseUrl = 'https://api.themoviedb.org/3'
   private apiKey = import.meta.env['NG_APP_TMDB_API_KEY']
-
-  constructor (private http: HttpClient){
+  public jwApiKey = import.meta.env['NG_APP_JUST_WATCH']
+  constructor(private http: HttpClient) {
   }
   getMovieDetails(id: string): Observable<any> {
     const headers = new HttpHeaders({
@@ -76,4 +76,26 @@ export class DetailsService {
     })
     return this.http.get(`https://api.themoviedb.org/3/movie/${id}/release_dates?language=en-US`, { headers })
   }
+
+
+
+  getPricesToWatch(title: string, id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    console.log(this.jwApiKey)
+    return this.http.get(`https://api.watchmode.com/v1/search/?apiKey=${this.jwApiKey}&search_field=name&search_value=${title}`, { headers }).pipe(
+      switchMap((data: any) => {
+        const thismovie = data.title_results.filter((movie: any) => movie.tmdb_id === Number(id))
+        console.log(thismovie)
+        if (thismovie) {
+          return this.http.get(`https://api.watchmode.com/v1/title/${thismovie[0]['id']}/sources/?apiKey=${this.jwApiKey}`, { headers })
+        } else {
+          return of([])
+        }
+      })
+    )
+  }
+
+
 }

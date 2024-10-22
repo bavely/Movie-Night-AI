@@ -1,9 +1,23 @@
 @if (loading) {
-<p>Loading...</p>
+<div
+  class="flex flex-row gap-4 h-auto flex-wrap justify-center items-center mt-5"
+>
+  <img
+    src="assets/images/popcorn.gif"
+    alt="loading"
+    class="h-50 w-50 self-center justify-center items-center mt-5"
+  />
+</div>
 }@else {
 
 <section class="details-container">
-  <div class="backdrop-container placeholder"  [class.placeholder-loaded] = "isImageLoaded"  [style]="{backgroundImage: 'url('+ movieDetails.small_poster_path +')  '}" >
+  <div
+    class="backdrop-container placeholder"
+    [class.placeholder-loaded]="isImageLoaded"
+    [style]="{
+      backgroundImage: 'url(' + movieDetails.small_poster_path + ')  '
+    }"
+  >
     <img
       [src]="
         movieDetails.backdrop_path
@@ -12,8 +26,8 @@
       "
       [alt]="movieDetails.title"
       class="backdrop-image image"
-      [class.image-loaded] = "isImageLoaded"
-      loading="lazy"
+      [class.image-loaded]="isImageLoaded"
+      [loading]="'lazy'"
       (load)="onImageLoad()"
     />
   </div>
@@ -55,13 +69,27 @@
       </button></span
     >
     @if(movieDetails.videos && movieDetails.videos.length > 0){
-      <button
+    <button
       class="text-sm w-24 mt-3 bg-zinc-900 bg-opacity-50 hover:bg-zinc-800 text-white font-semibold py-2 px-4 rounded"
       (click)="watchTrailer()"
     >
       TRAILER
     </button>
     }
+    <div class="flex flex-row gap-2 flex-wrap mt-3">
+      @for(p of  movieDetails.justWatch; track $index){
+        <div class="flex flex-col gap-2">
+    <a href="{{ p.web_url }}" target="_blank" >  <img [src]="'https://img.logo.dev/' + domainGetter(p.web_url) +'?token='+apiKey" [alt]="p.name" class="w-12 h-12 rounded rounded-full p-1" />
+    </a>
+    <p class="text-white text-opacity-50 text-sm truncate text-center text-wrap text-xs max-w-12" >
+      {{ p.name }}
+    </p>
+    <p class="text-white text-opacity-50 text-sm truncate">
+      {{ p.price }}
+    </p>
+        </div>
+      }
+    </div>
   </div>
 </section>
 
@@ -96,7 +124,6 @@
   <p class="text-white text-opacity-50 text-sm truncate">
     Cast:
     {{ movieDetails.cast.join(", ") }}
-
   </p>
   <span class="text-white text-opacity-50 text-sm truncate"
     ><button class="text-zinc-400 text-sm" (click)="showMoreCast()">
@@ -104,18 +131,36 @@
     </button></span
   >
   @if(movieDetails.videos && movieDetails.videos.length > 0){
-    <button
+  <button
     class="text-sm w-24 mt-3 bg-zinc-900 bg-opacity-50 hover:bg-zinc-800 text-white font-semibold py-2 px-4 rounded"
     (click)="watchTrailer()"
   >
     TRAILER
   </button>
   }
+
+  <div class="flex flex-row gap-2 flex-wrap mt-3">
+    @for(p of  movieDetails.justWatch; track $index){
+      <div class="flex flex-col gap-2">
+  <a href="{{ p.web_url }}" target="_blank" >  <img [src]="'https://img.logo.dev/' + domainGetter(p.web_url) +'?token='+apiKey" [alt]="p.name" class="w-12 h-12 rounded rounded-full p-1" />
+  </a>
+  <p class="text-white text-opacity-50 text-sm truncate text-center text-wrap text-xs max-w-12" >
+    {{ p.name }}
+  </p>
+  <p class="text-white text-opacity-50 text-sm truncate">
+    {{ p.price }}
+  </p>
+      </div>
+    }
+  </div>
 </div>
 
-<app-cast
-/>
-<app-videos/>
-<h5 class="text-white text-2xl text-amber-100 flex flex-col justify-center items-center p-5">Similar Movies</h5>
+<app-cast />
+<app-videos />
+<h5
+  class="text-white text-2xl text-amber-100 flex flex-col justify-center items-center p-5"
+>
+  Similar Movies
+</h5>
 <app-list [list]="movieDetails.similar" [loading]="loading"></app-list>
 }
