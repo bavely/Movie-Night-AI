@@ -6,7 +6,7 @@
     }
     @if (loading) {
       <!-- Each loading placeholder -->
-        @for (item of varray; track $index) {
+        @for (item of varray(list); track $index) {
           <!-- <div class="border border-blue-300 shadow rounded-md p-4 max-w-sm w-40 h-50 max-h-50"> -->
           <div class="animate-pulse flex flex-col shadow rounded-md p-4  rounded" [@fadeAnimation]>
             <div
