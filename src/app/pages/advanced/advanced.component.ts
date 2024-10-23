@@ -87,7 +87,6 @@ export class AdvancedComponent {
       .subscribe((newData: { results: [], total_pages: number }) => {
         this.totalPages = newData.total_pages;
           this.data = [...this.data, ...newData.results];
-
         this.loading = false;
       });
 
@@ -105,18 +104,17 @@ export class AdvancedComponent {
       if (this.page >= this.totalPages) {
         return;
       }
+
+      this.loading = true;
+      setTimeout(() => {
       this.page++;
       this.scrollSubject.next(this.page);
+      }, 1300);
     }
   }
 
   private loadData(): void {
-
-    this.loading = true;
-    setTimeout(() => {
       this.scrollSubject.next(this.page);
-
-    }, 1500);
   }
 
   search() {

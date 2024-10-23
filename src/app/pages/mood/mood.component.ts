@@ -43,23 +43,21 @@ export class MoodComponent {
 
   data: any[] = [];
   page: number = 1;
-  grenr: number = 0;
+  grenr: number = 53;
   private scrollSubject = new BehaviorSubject<number>(this.page);
   loading = true;
   imagBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
   ngOnInit() {
-
-
     this.loadData();
-    this.grenr = localStorage.getItem('mood') ? Number(localStorage.getItem('mood')) : 0;
+    this.grenr = localStorage.getItem('mood') ? parseInt(localStorage.getItem('mood')!) : this.grenr;
     this.scrollSubject
       .pipe(
         debounceTime(300), // Prevent too many requests
         switchMap((page) => {
           this.loading = true;
-          if (this.grenr > 0) {
 
+          if (this.grenr > 0) {
             return this.moodserv.getData(page, this.grenr.toString());
           } else {
             return this.moodserv.getData(page, '');
@@ -69,10 +67,7 @@ export class MoodComponent {
       )
       .subscribe((newData: { results: [], total_pages: number }) => {
         this.totalPages = newData.total_pages;
-
           this.data = [...this.data, ...newData.results];
-
-
         console.log(this.data);
         this.loading = false;
       });
@@ -95,20 +90,20 @@ export class MoodComponent {
     const pos = (document.documentElement.scrollTop || document.body.scrollTop) + window.innerHeight;
     const max = document.documentElement.scrollHeight || document.body.scrollHeight;
 
-    if (pos > max - 500 && !this.loading) {
+    if (pos > max - 100 && !this.loading) {
       if (this.page >= this.totalPages) {
         return;
       }
+      this.loading = true;
+      setTimeout(() => {
       this.page++;
       this.scrollSubject.next(this.page);
+      }, 1300);
     }
   }
 
   private loadData(): void {
-    this.loading = true;
-    setTimeout(() => {
       this.scrollSubject.next(this.page);
-    }, 1500);
 
   }
 

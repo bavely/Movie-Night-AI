@@ -8,6 +8,7 @@ import { DividerModule } from 'primeng/divider';
 import { CategoryComponent } from '../../component/category/category.component';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
+import { set } from 'date-fns';
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -118,16 +119,18 @@ export class MainComponent {
       if (this.page >= this.totalPages) {
         return;
       }
-      this.page++;
-      this.scrollSubject.next(this.page);
+
+      this.loading = true;
+      setTimeout(() => {
+        this.page++;
+        this.scrollSubject.next(this.page);
+      }, 1300);
+
     }
   }
 
   private loadData(): void {
-    this.loading = true;
-    setTimeout(() => {
       this.scrollSubject.next(this.page);
-    }, 1500);
 
   }
 

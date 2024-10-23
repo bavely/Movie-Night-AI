@@ -4,41 +4,31 @@
     @for (item of list; track $index) {
 <app-moviecontainer [movie]="item"></app-moviecontainer>
     }
+    @if (loading) {
+      <!-- Each loading placeholder -->
+        @for (item of varray; track $index) {
+          <!-- <div class="border border-blue-300 shadow rounded-md p-4 max-w-sm w-40 h-50 max-h-50"> -->
+          <div class="animate-pulse flex flex-col shadow rounded-md p-4  rounded" [@fadeAnimation]>
+            <div
+              class="square-full bg-slate-200 h-48 w-full align-middle mb-4 self-center h-50 min-h-48 w-40 min-w-40 rounded"
+            ></div>
+            <div class="space-y-6 py-1 justify-center">
+              <!-- <div class="h-2 bg-slate-200 rounded"></div> -->
+              <div class="space-y-3">
+                <div class="grid grid-cols-3 gap-4">
+                  <div class="h-2 bg-slate-200 rounded col-span-2"></div>
+                  <div class="h-2 bg-slate-200 rounded col-span-1"></div>
+                </div>
+                <div class="h-2 bg-slate-200 rounded"></div>
+              </div>
+            </div>
+          </div>
+        <!-- </div> -->
+        }
+    }
   </div>
 </section>
 
-<section class="flex flex-col justify-center items-center p-5">
-  @if (loading) {
-    <!-- Each loading placeholder -->
-    <div class="flex flex-row gap-4 h-auto flex-wrap justify-center items-center">
-      @for (item of varray; track $index) {
-        <div
-        class="border border-blue-300 shadow rounded-md p-4 max-w-sm w-40 mx-auto max-h-50"
-      >
-        <div class="animate-pulse flex flex-col space-x-4">
-          <div
-            class="square-full bg-slate-200 h-48 w-full align-middle mb-4 self-center"
-          ></div>
-          <div class="space-y-6 py-1 justify-center">
-            <div class="h-2 bg-slate-200 rounded"></div>
-            <div class="space-y-3">
-              <div class="grid grid-cols-3 gap-4">
-                <div class="h-2 bg-slate-200 rounded col-span-2"></div>
-                <div class="h-2 bg-slate-200 rounded col-span-1"></div>
-              </div>
-              <div class="h-2 bg-slate-200 rounded"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      }
+<!-- <section class="flex flex-col justify-center items-center p-5">
 
-
-    <!-- Add more placeholders if needed -->
-
-    </div>
-    <!-- More placeholders can go here if needed -->
-
-
-  }
-</section>
+</section> -->

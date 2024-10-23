@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { MoviecontainerComponent } from '../moviecontainer/moviecontainer.component';
+import { fadeAnimation } from '../../../utils/animations.component';
 
 @Component({
   selector: 'app-list',
   standalone: true,
   imports: [MoviecontainerComponent],
+  animations: [fadeAnimation()],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
