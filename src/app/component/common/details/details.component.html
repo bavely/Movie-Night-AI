@@ -10,7 +10,7 @@
 </div>
 }@else {
 
-<section class="details-container">
+<section class="details-container" >
   <div
     class="backdrop-container placeholder"
     [class.placeholder-loaded]="isImageLoaded"
@@ -32,7 +32,7 @@
     />
   </div>
 
-  <div class="details-content">
+  <div class="details-content" [@slideAnimation]>
     <p class="font-bold truncate mt-5 text-white text-2xl">
       {{ movieDetails.title }}
     </p>
@@ -93,7 +93,7 @@
   </div>
 </section>
 
-<div class="details-content-mobile">
+<div class="details-content-mobile" [@slideAnimation]>
   <p class="font-bold truncate mt-5 text-white text-2xl">
     {{ movieDetails.title }}
   </p>

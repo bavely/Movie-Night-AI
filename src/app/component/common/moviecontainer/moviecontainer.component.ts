@@ -2,10 +2,13 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { Router } from '@angular/router';
+import { fadeAnimation } from '../../../utils/animations.component';
+
 @Component({
   selector: 'app-moviecontainer',
   standalone: true,
   imports: [FormsModule, RatingModule],
+  animations: [fadeAnimation()],
   templateUrl: './moviecontainer.component.html',
   styleUrl: './moviecontainer.component.css'
 })

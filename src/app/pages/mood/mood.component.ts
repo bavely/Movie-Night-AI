@@ -4,7 +4,7 @@ import { MoodService } from './mood.service';
 import { type Image } from "./mood.interface";
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
-import {ListComponent} from "../../component/common/list/list.component";
+import { ListComponent } from "../../component/common/list/list.component";
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
@@ -20,12 +20,13 @@ export class MoodComponent {
 
   public imageList!: Image[];
   isImageLoaded = false;
+  totalPages: number = 0
   responsiveOptions: any[] | undefined;
   onImageLoad() {
     this.isImageLoaded = true;
   }
 
-  constructor(private router: Router, private moodserv:MoodService ) {
+  constructor(private router: Router, private moodserv: MoodService) {
     this.imageList = moodserv.getImages()
   }
 
@@ -44,65 +45,71 @@ export class MoodComponent {
   page: number = 1;
   grenr: number = 0;
   private scrollSubject = new BehaviorSubject<number>(this.page);
-  loading = false;
+  loading = true;
   imagBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
   ngOnInit() {
 
 
     this.loadData();
-this.grenr = localStorage.getItem('mood') ? Number(localStorage.getItem('mood')) : 0;
+    this.grenr = localStorage.getItem('mood') ? Number(localStorage.getItem('mood')) : 0;
     this.scrollSubject
       .pipe(
-        debounceTime(1000), // Prevent too many requests
+        debounceTime(300), // Prevent too many requests
         switchMap((page) => {
           this.loading = true;
-if (this.grenr > 0) {
+          if (this.grenr > 0) {
 
-  return this.moodserv.getData(page, this.grenr.toString());
-}else{
-  return this.moodserv.getData(page, '');
-}
+            return this.moodserv.getData(page, this.grenr.toString());
+          } else {
+            return this.moodserv.getData(page, '');
+          }
 
         })
       )
-      .subscribe((newData : {results: []}) => {
-        this.data = [...this.data, ...newData.results];
+      .subscribe((newData: { results: [], total_pages: number }) => {
+        this.totalPages = newData.total_pages;
+
+          this.data = [...this.data, ...newData.results];
+
+
         console.log(this.data);
         this.loading = false;
       });
 
-      this.responsiveOptions = [
+    this.responsiveOptions = [
 
-        {
-          breakpoint: '768px',
-          numVisible: 1,
-          numScroll: 1
-        }
+      {
+        breakpoint: '768px',
+        numVisible: 1,
+        numScroll: 1
+      }
 
-      ];
+    ];
 
   }
 
   @HostListener('window:scroll', [])
   onScroll(): void {
     console.log('scrolled');
-    // if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !this.loading) {
-    //   this.page++;
-    //   this.scrollSubject.next(this.page);
-    // }
-
     const pos = (document.documentElement.scrollTop || document.body.scrollTop) + window.innerHeight;
     const max = document.documentElement.scrollHeight || document.body.scrollHeight;
 
-    if (pos > max - 100 && !this.loading) {
-         this.page++;
+    if (pos > max - 500 && !this.loading) {
+      if (this.page >= this.totalPages) {
+        return;
+      }
+      this.page++;
       this.scrollSubject.next(this.page);
     }
   }
 
   private loadData(): void {
-    this.scrollSubject.next(this.page);
+    this.loading = true;
+    setTimeout(() => {
+      this.scrollSubject.next(this.page);
+    }, 1500);
+
   }
 
 

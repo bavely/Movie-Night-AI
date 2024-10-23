@@ -1,6 +1,6 @@
-<div class="flex flex-col">
+<div class="flex flex-col" [@fadeAnimation]>
 
-  <div class="rounded h-50 w-40 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 relative group placeholder" [class.placeholder-loaded] = "isImageLoaded" [style]="{backgroundImage: 'url('+ postarBaseUrl + movie.poster_path +')  '}" >
+  <div class="rounded h-50 w-40 transition ease-in-out duration-500 hover:scale-110  hover:cursor-pointer hover:bg-zinc-800 relative group placeholder" [class.placeholder-loaded] = "isImageLoaded" [style]="{backgroundImage: 'url('+ postarBaseUrl + movie.poster_path +')  '}" >
     <img [src]="movie.poster_path ? imagBaseUrl + movie.poster_path : 'assets/images/no-poster-available.webp'"
     [alt]="movie.title"  class="rounded h-50 w-40 transition hover:scale-110 hover:cursor-pointer hover:bg-zinc-800 image"
     [class.image-loaded] = "isImageLoaded"

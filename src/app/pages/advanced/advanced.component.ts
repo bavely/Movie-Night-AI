@@ -6,6 +6,7 @@ import { ListComponent } from '../../component/common/list/list.component';
 import { AdvancedService } from './advanced.service';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
+import { set } from 'date-fns';
 
 @Component({
   selector: 'app-advanced',
@@ -63,15 +64,15 @@ export class AdvancedComponent {
   page: number = 1;
   keyword: string = "";
   private scrollSubject = new BehaviorSubject<number>(this.page);
-  loading = false;
+  loading = true;
   inputs = ""
   ngOnInit() {
-   this.keyword = this.inputs ? this.inputs : localStorage.getItem('keyword') ?? '';
+    this.keyword = this.inputs ? this.inputs : localStorage.getItem('keyword') ?? '';
     this.loadData();
 
     this.scrollSubject
       .pipe(
-        debounceTime(1000), // Prevent too many requests
+        debounceTime(300), // Prevent too many requests
         switchMap((page) => {
           this.loading = true;
           if (this.keyword !== "") {
@@ -84,10 +85,9 @@ export class AdvancedComponent {
         })
       )
       .subscribe((newData: { results: [], total_pages: number }) => {
-        console.log(newData.total_pages);
         this.totalPages = newData.total_pages;
-        this.data = [...this.data, ...newData.results];
-        console.log(this.data);
+          this.data = [...this.data, ...newData.results];
+
         this.loading = false;
       });
 
@@ -111,7 +111,12 @@ export class AdvancedComponent {
   }
 
   private loadData(): void {
-    this.scrollSubject.next(this.page);
+
+    this.loading = true;
+    setTimeout(() => {
+      this.scrollSubject.next(this.page);
+
+    }, 1500);
   }
 
   search() {

@@ -24,7 +24,8 @@ export class MainComponent {
   page = 1
   discoverMore: boolean = false
   category: string = ""
-  loading: boolean = false
+  loading: boolean = true
+  totalPages: number = 0
   constructor(private mainService: MainService, private router: Router, private location: Location) {
 
   }
@@ -66,15 +67,18 @@ export class MainComponent {
 
           })
         )
-        .subscribe((newData: { results: [] }) => {
-          if (this.category === "popular") {
-            this.popularMovies = [...this.popularMovies, ...newData.results];
+        .subscribe((newData: { results: [], total_pages: number }) => {
 
-          } else if (this.category === "top_rated") {
-            this.topRatedMovies = [...this.topRatedMovies, ...newData.results];
-          } else if (this.category === "upcoming") {
-            this.upcomingMovies = [...this.upcomingMovies, ...newData.results];
-          }
+          this.totalPages = newData.total_pages;
+            if (this.category === "popular") {
+              this.popularMovies = [...this.popularMovies, ...newData.results];
+
+            } else if (this.category === "top_rated") {
+              this.topRatedMovies = [...this.topRatedMovies, ...newData.results];
+            } else if (this.category === "upcoming") {
+              this.upcomingMovies = [...this.upcomingMovies, ...newData.results];
+            }
+
           this.loading = false;
         })
 
@@ -111,13 +115,20 @@ export class MainComponent {
     const max = document.documentElement.scrollHeight || document.body.scrollHeight;
 
     if (pos > max - 100 && !this.loading && this.discoverMore) {
+      if (this.page >= this.totalPages) {
+        return;
+      }
       this.page++;
       this.scrollSubject.next(this.page);
     }
   }
 
   private loadData(): void {
-    this.scrollSubject.next(this.page);
+    this.loading = true;
+    setTimeout(() => {
+      this.scrollSubject.next(this.page);
+    }, 1500);
+
   }
 
 }

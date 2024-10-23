@@ -10,10 +10,12 @@ import {DecimalPipe} from '@angular/common';
 import { CastComponent } from '../../cast/cast.component';
 import { VideosComponent } from '../../videos/videos.component';
 import { ListComponent } from '../list/list.component';
+import { fadeAnimation, slideAnimation } from '../../../utils/animations.component';
 @Component({
   selector: 'app-details',
   standalone: true,
   imports: [ TabViewModule, RatingModule, FormsModule, DecimalPipe, CastComponent, VideosComponent, ListComponent, NgOptimizedImage],
+  animations: [fadeAnimation(),slideAnimation() ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })

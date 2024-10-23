@@ -9,7 +9,7 @@ import { MoviecontainerComponent } from '../moviecontainer/moviecontainer.compon
   styleUrl: './list.component.css'
 })
 export class ListComponent {
-  varray = new Array(8);
+  varray = new Array(18);
   @Input() list: any[] = [];
   @Input() loading: boolean = false;
   imagBaseUrl = 'https://image.tmdb.org/t/p/w500';
