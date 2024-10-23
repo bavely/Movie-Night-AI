@@ -68,7 +68,6 @@ export class MoodComponent {
       .subscribe((newData: { results: [], total_pages: number }) => {
         this.totalPages = newData.total_pages;
           this.data = [...this.data, ...newData.results];
-        console.log(this.data);
         this.loading = false;
       });
 
@@ -86,7 +85,6 @@ export class MoodComponent {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
-    console.log('scrolled');
     const pos = (document.documentElement.scrollTop || document.body.scrollTop) + window.innerHeight;
     const max = document.documentElement.scrollHeight || document.body.scrollHeight;
 

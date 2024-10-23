@@ -68,10 +68,8 @@ isInit = true;
       });
 
       const filteredKeywords = keywords.filter(k => k !== "" && k !== undefined);
-      console.log(filteredKeywords);
 
       this.mianservice.getData(filteredKeywords).pipe().subscribe((data: any) => {
-        console.log(data, "data");
         this.sugestedMovies = data.map((m: any) => m.results[0]).filter((m: any) => m !== undefined);
 
         // data.reduce((a: any, b: any) => [...a, ...b.results], [])
@@ -79,7 +77,6 @@ isInit = true;
         //   .slice(0, 5);
 
         localStorage.setItem('sugestedMovies', JSON.stringify(this.sugestedMovies));
-        console.log(this.sugestedMovies);
       });
     }
   }

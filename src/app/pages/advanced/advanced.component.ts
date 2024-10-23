@@ -21,7 +21,6 @@ export class AdvancedComponent {
   totalPages: number = 0;
 
   transition() {
-    console.log(this.wasInside)
     gsap.to('#formContainer', {
       width: this.wasInside ? '100%' : '50%',
       duration: 1,
@@ -95,7 +94,6 @@ export class AdvancedComponent {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
-    console.log('scrolled');
 
     const pos = (document.documentElement.scrollTop || document.body.scrollTop) + window.innerHeight;
     const max = document.documentElement.scrollHeight || document.body.scrollHeight;

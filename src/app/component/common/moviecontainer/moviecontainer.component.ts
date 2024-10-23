@@ -35,7 +35,6 @@ export class MoviecontainerComponent {
  }
 
  goToMovie(movie: any) {
-  console.log(movie)
   this.router.navigate(['/details', movie.id])
 
  }

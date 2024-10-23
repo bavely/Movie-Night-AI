@@ -50,7 +50,6 @@ export class DetailsComponent implements AfterViewInit  {
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('id'); // Access a specific param
-      console.log(id);
       forkJoin([
         this.detailsService.getMovieDetails(id as string),
         this.detailsService.getSimilarMovies(id as string),
@@ -63,7 +62,6 @@ export class DetailsComponent implements AfterViewInit  {
       ]).subscribe({
         next: (data) => {
           this.loading = false;
-          console.log(data);
           this.movieDetails = {
             justWatch: [],
             title : data[0].original_title || "",
@@ -94,7 +92,6 @@ export class DetailsComponent implements AfterViewInit  {
             obj[p.name] = p
           });
           this.movieDetails.justWatch = Object.values(obj);
-          console.log(this.movieDetails, "getPricesToWatch")
         });
 
           this.videos = this.movieDetails.videos
@@ -111,7 +108,6 @@ export class DetailsComponent implements AfterViewInit  {
 
   ngAfterViewInit() {
     // Now you can safely access `videosComponent`
-    console.log(this.videosComponent);
     if (this.videosComponent) {
       this.videosComponent.videosGetter(this.movieDetails.videos);
     }

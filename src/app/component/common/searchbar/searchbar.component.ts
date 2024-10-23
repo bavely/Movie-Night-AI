@@ -75,7 +75,6 @@ mm.add(
   }
 
   toggle() {
-    console.log('toggling');
     this.isOpen = !this.isOpen;
     this.move();
   }

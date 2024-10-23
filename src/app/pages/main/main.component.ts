@@ -49,7 +49,6 @@ export class MainComponent {
 
     this.loadData();
 
-      console.log(this.discoverMore, this.category, this.page)
 
 
       this.scrollSubject
@@ -110,8 +109,6 @@ export class MainComponent {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
-    console.log('scrolled');
-    console.log(this.discoverMore)
     const pos = (document.documentElement.scrollTop || document.body.scrollTop) + window.innerHeight;
     const max = document.documentElement.scrollHeight || document.body.scrollHeight;
 

@@ -19,10 +19,8 @@ export class VideosComponent implements OnInit {
   TrailerUrl : string = ""
 
   constructor( ) {
-    console.log(this.videos)
   }
   ngOnInit(): void {
-    console.log(this.videos)
   }
   close() {
     this.open = false
@@ -34,10 +32,7 @@ export class VideosComponent implements OnInit {
   videosGetter(videos : any[]) {
     this.videos = videos
     this.open = true
-    console.log(this.videos)
-    // console.log(this.videos.find((video: any) => video.type === "Trailer"))
     this.TrailerUrl = this.videos.find((video: any) => video.type === "Trailer") ?`${this.videoBaseUrlp1}/${this.videos.find((video: any) => video.type === "Trailer")?.key}${this.videoapBaseUrlp2}` : ""
-    // console.log(this.TrailerUrl)
     this.videosUrls = this.videos.filter((video: any) => video.type !== "Trailer").map((video: any) =>`${this.videoBaseUrlp1}/${video.key}${this.noapP2}`)
   }
 

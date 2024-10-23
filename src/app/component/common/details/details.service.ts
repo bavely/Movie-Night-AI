@@ -52,7 +52,6 @@ export class DetailsService {
   }
 
   getMovieCredits(id: string): Observable<any> {
-    console.log(this.apiKey)
     const headers = new HttpHeaders({
       'Authorization': this.apiKey,
       'Content-Type': 'application/json'
@@ -83,11 +82,9 @@ export class DetailsService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    console.log(this.jwApiKey)
     return this.http.get(`https://api.watchmode.com/v1/search/?apiKey=${this.jwApiKey}&search_field=name&search_value=${title}`, { headers }).pipe(
       switchMap((data: any) => {
         const thismovie = data.title_results.filter((movie: any) => movie.tmdb_id === Number(id))
-        console.log(thismovie)
         if (thismovie) {
           return this.http.get(`https://api.watchmode.com/v1/title/${thismovie[0]['id']}/sources/?apiKey=${this.jwApiKey}`, { headers })
         } else {
