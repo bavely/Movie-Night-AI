@@ -77,7 +77,7 @@
           Discover More
         </button>
       </div>
-      <div class="flex flex-row gap-4 h-auto flex-wrap sm:justify-center sm:items-center sm:self-center">
+      <div class="flex flex-row gap-4 h-auto flex-wrap justify-center items-center self-center">
         <!-- Loop through items in data -->
         @if(popularMovies.length > 0) { @for (item of popularMovies; track $index)
         {
@@ -97,7 +97,7 @@
           Discover More
         </button>
       </div>
-      <div class="flex flex-row gap-4 h-auto flex-wrap">
+      <div class="flex flex-row gap-4 h-auto flex-wrap justify-center items-center self-center">
         <!-- Loop through items in data -->
         @if(topRatedMovies.length > 0) { @for (item of topRatedMovies; track
         $index) {
@@ -113,7 +113,7 @@
           Discover More
         </button>
       </div>
-      <div class="flex flex-row gap-4 h-auto flex-wrap">
+      <div class="flex flex-row gap-4 h-auto flex-wrap justify-center items-center self-center mb-12">
         <!-- Loop through items in data -->
         @if(upcomingMovies.length > 0) { @for (item of upcomingMovies; track
         $index) {

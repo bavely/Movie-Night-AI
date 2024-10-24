@@ -67,7 +67,7 @@
 </section>
 
 <section class="grid lg:grid-cols-2 grid-cols-1">
-  <div class="h-full flex flex-col bg-zinc-900">
+  <div class=" flex flex-col bg-zinc-900" style="max-height: 91%;">
     <!-- Messages -->
     <div
       class="flex-1 overflow-auto"
@@ -75,7 +75,7 @@
       style="max-height: 39rem"
       #chatContainer
     >
-      <div class="py-2 px-3" style="min-height: 500px">
+      <div class="py-2 px-3" style="min-height: 91%;">
         @for (m of messages; track $index) { @if (m.roll === "mia") {
         <div class="flex mb-5">
           <p-avatar
@@ -148,7 +148,7 @@
     </div>
     <div
       class="flex flex-row gap-4 flex-wrap justify-center items-center overflow-auto"
-      style="max-height: 573px"
+      style="max-height: 91%"
     >
       @for (s of sugestedMovies; track $index) {
       <app-moviecontainer [movie]="s"></app-moviecontainer>

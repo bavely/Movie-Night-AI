@@ -10,7 +10,7 @@
 </div>
 }@else {
 
-<section class="details-container" >
+<section class="details-container">
   <div
     class="backdrop-container placeholder"
     [class.placeholder-loaded]="isImageLoaded"
@@ -33,7 +33,7 @@
   </div>
 
   <div class="details-content" [@slideAnimation]>
-    <p class="font-bold truncate mt-5 text-white text-2xl">
+    <p class="font-bold truncate  text-white text-2xl">
       {{ movieDetails.title }}
     </p>
     <p class="text-white text-opacity-50 text-sm">
@@ -76,25 +76,52 @@
       TRAILER
     </button>
     }
+
+
+    @if(movieDetails.justWatch && movieDetails.justWatch.length > 0){
     <div class="flex flex-row gap-2 flex-wrap mt-3">
-      @for(p of  movieDetails.justWatch; track $index){
-        <div class="flex flex-col gap-2">
-    <a href="{{ p.web_url }}" target="_blank" >  <img [src]="'https://img.logo.dev/' + domainGetter(p.web_url) +'?token='+apiKey" [alt]="p.name" class="w-12 h-12 rounded rounded-full p-1" />
-    </a>
-    <p class="text-white text-opacity-50 text-sm truncate text-center text-wrap text-xs max-w-12" >
-      {{ p.name }}
-    </p>
-    <p class="text-white text-opacity-50 text-sm truncate">
-      {{ p.price }}
-    </p>
-        </div>
-      }
+      <p-carousel
+        [value]="movieDetails.justWatch"
+        [numVisible]="3"
+        [numScroll]="3"
+        [style]="{ color: 'white' }"
+      >
+        <ng-template let-p pTemplate="item">
+          <div class="flex flex-col gap-2 border-1 surface-border border-round">
+            <div class="">
+              <div class="relative">
+                <a href="{{ p.web_url }}" target="_blank">
+                  <img
+                    [src]="
+                      'https://img.logo.dev/' +
+                      domainGetter(p.web_url) +
+                      '?token=' +
+                      apiKey
+                    "
+                    [alt]="p.name"
+                    class="w-12 h-12 rounded rounded-full p-2"
+                  />
+                </a>
+                <p
+                  class="text-white text-opacity-50 text-sm truncate text-center text-wrap text-xs max-w-12"
+                >
+                  {{ p.name }}
+                </p>
+                <p class="text-white text-opacity-50 text-sm truncate">
+                  {{ p.price }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
     </div>
+    }
   </div>
 </section>
 
 <div class="details-content-mobile" [@slideAnimation]>
-  <p class="font-bold truncate mt-5 text-white text-2xl">
+  <p class="font-bold truncate  text-white text-2xl">
     {{ movieDetails.title }}
   </p>
   <p class="text-white text-opacity-50 text-sm">
@@ -137,22 +164,45 @@
   >
     TRAILER
   </button>
-  }
-
+  } @if (movieDetails.justWatch && movieDetails.justWatch.length > 0) {
   <div class="flex flex-row gap-2 flex-wrap mt-3">
-    @for(p of  movieDetails.justWatch; track $index){
-      <div class="flex flex-col gap-2">
-  <a href="{{ p.web_url }}" target="_blank" >  <img [src]="'https://img.logo.dev/' + domainGetter(p.web_url) +'?token='+apiKey" [alt]="p.name" class="w-12 h-12 rounded rounded-full p-1" />
-  </a>
-  <p class="text-white text-opacity-50 text-sm truncate text-center text-wrap text-xs max-w-12" >
-    {{ p.name }}
-  </p>
-  <p class="text-white text-opacity-50 text-sm truncate">
-    {{ p.price }}
-  </p>
-      </div>
-    }
+    <p-carousel
+      [value]="movieDetails.justWatch"
+      [numVisible]="3"
+      [numScroll]="3"
+      [style]="{ color: 'white' }"
+    >
+      <ng-template let-p pTemplate="item">
+        <div class="flex flex-col gap-2 border-1 surface-border border-round">
+          <div class="">
+            <div class="relative">
+              <a href="{{ p.web_url }}" target="_blank">
+                <img
+                  [src]="
+                    'https://img.logo.dev/' +
+                    domainGetter(p.web_url) +
+                    '?token=' +
+                    apiKey
+                  "
+                  [alt]="p.name"
+                  class="w-12 h-12 rounded rounded-full p-2"
+                />
+              </a>
+              <p
+                class="text-white text-opacity-50 text-sm truncate text-center text-wrap text-xs max-w-12"
+              >
+                {{ p.name }}
+              </p>
+              <p class="text-white text-opacity-50 text-sm truncate">
+                {{ p.price }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
   </div>
+  }
 </div>
 
 <app-cast />
