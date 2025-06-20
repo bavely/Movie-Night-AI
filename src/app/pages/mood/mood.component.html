@@ -89,5 +89,12 @@
     </div>
   </div>
 </section>
-
+@if(grenrName){
+<div class="flex justify-center items-center mb-5 mt-10">
+  <h1 class="text-2xl text-white font-bold">{{ grenrName.toLocaleUpperCase() }} MOVIES</h1>
+</div>
+<div class="flex justify-center items-center mb-10">
+  <p class="text-gray-400 text-sm">Found {{ totalResults }} results on {{ totalPages }} pages</p>
+</div>
+}
 <app-list [list]="data" [loading]="loading"></app-list>

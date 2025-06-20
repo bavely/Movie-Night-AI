@@ -5,11 +5,11 @@ import { AvatarModule } from 'primeng/avatar';
 import { MoviecontainerComponent } from '../../component/common/moviecontainer/moviecontainer.component';
 import { format } from 'date-fns';
 import { NgxTypewriterComponent } from '@omnedia/ngx-typewriter';
-
+import { TypingComponent } from '../../component/typing/typing.component';
 @Component({
   selector: 'app-mia',
   standalone: true,
-  imports: [AvatarModule, FormsModule, MoviecontainerComponent, NgxTypewriterComponent],
+  imports: [AvatarModule, FormsModule, MoviecontainerComponent, NgxTypewriterComponent, TypingComponent],
   templateUrl: './mia.component.html',
   styleUrls: ['./mia.component.css']  // Corrected to styleUrls
 })
@@ -27,8 +27,8 @@ export class MiaComponent implements AfterViewChecked, OnInit {
   ];
   sugestedMovies: any[] = [];
   messageInput!: string;
-isInit = true;
-
+  isInit = true;
+  featcingData = false;
   constructor(public mianservice: MiaService, private elementRef: ElementRef) {}
 
   ngAfterViewChecked() {
@@ -55,21 +55,9 @@ isInit = true;
     }
   }
 
-  handleMoviesSearch(mas: string) {
-    let unCleanKeywords = mas?.split('"');
-    if (unCleanKeywords) {
-      let keywords: string[] = [];
-      unCleanKeywords.forEach((k, i) => {
-        if (k.includes('++')) {
-          keywords.push(unCleanKeywords[i + 1]);
-        } else {
-          keywords.push("");
-        }
-      });
+  handleMoviesSearch(mas: string[]) {
 
-      const filteredKeywords = keywords.filter(k => k !== "" && k !== undefined);
-
-      this.mianservice.getData(filteredKeywords).pipe().subscribe((data: any) => {
+       this.mianservice.getData(mas).pipe().subscribe((data: any) => {
         this.sugestedMovies = data.map((m: any) => m.results[0]).filter((m: any) => m !== undefined);
 
         // data.reduce((a: any, b: any) => [...a, ...b.results], [])
@@ -77,22 +65,27 @@ isInit = true;
         //   .slice(0, 5);
 
         localStorage.setItem('sugestedMovies', JSON.stringify(this.sugestedMovies));
+        this.featcingData = false;
       });
-    }
   }
 
   async callOpenAi(ms: string) {
-    const prompt = `Suggest a movie for me based on the following prompt: ${ms}. Make your response for any movie names between double quotes and ++ signs only before the movie name.`;
+    this.featcingData = true;
+    const prompt = `${ms}`;
 
     await this.mianservice.openAiCall(prompt).then(mas => {
       this.isInit = false;
-      this.handleMoviesSearch(mas ?? "");
+      console.log(mas);
+
+      let parsedMas: any = JSON.parse(mas  ?? "{movies: [], fullResponse: ''}");
+
+      this.handleMoviesSearch(parsedMas.movies ?? []);
 
       this.messages = [
         ...this.messages,
         {
           id: Math.floor(Math.random() * 1000),
-          message: mas ?? "",
+          message: parsedMas.fullResponse ?? "",
           roll: "mia",
           time: format(new Date(), 'Pp')
         }

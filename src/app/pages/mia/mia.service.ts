@@ -25,12 +25,19 @@ export class MiaService {
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-
+        {
+          role: "system",
+             content: `You are a movie recommendation bot. Based on the user's prompt, recommend 3 movie titles in an array format like:
+{
+  "movies": ["Movie Title 1", "Movie Title 2", "Movie Title 3"],
+  "fullResponse": "Here are some movies you might like: Movie Title 1, Movie Title 2, Movie Title 3. You can ask for more details about any of these movies."
+}`
+        },
         {
           role: "user",
           content: prompt,
         },
-      ],
+      ]
     });
 
 return completion.choices[0].message.content;
