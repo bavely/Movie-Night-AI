@@ -20,7 +20,7 @@ export class MoodService {
     },
     {
       image: "/assets/images/3.jpg",
-      name: "Triller",
+      name: "Thriller",
       id: 53,
     },
     {
@@ -60,7 +60,7 @@ export class MoodService {
     },
     {
       image: "/assets/images/11.jpg",
-      name: "Fantacy",
+      name: "Fantasy",
       id: 14,
     },
     {

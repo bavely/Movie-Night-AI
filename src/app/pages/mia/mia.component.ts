@@ -75,7 +75,6 @@ export class MiaComponent implements AfterViewChecked, OnInit {
 
     await this.mianservice.openAiCall(prompt).then(mas => {
       this.isInit = false;
-      console.log(mas);
 
       let parsedMas: any = JSON.parse(mas  ?? "{movies: [], fullResponse: ''}");
 

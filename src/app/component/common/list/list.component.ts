@@ -21,12 +21,11 @@ let a = 8 - (arr.length % 8)
     return new Array(a + 6);
   };
 
-  // find the hight of the entire screen
+  // find the height of the entire screen
   getScreenHeight(): number {
     if (typeof window === 'undefined') {
       return 0; // Handle server-side rendering or environments without a window object
     }
-    console.log(window.innerHeight);
     return window.innerHeight;
   }
 

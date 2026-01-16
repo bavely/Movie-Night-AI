@@ -1,7 +1,8 @@
-import { Component, ViewChild, AfterViewInit  } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy  } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin, switchMap } from 'rxjs';
+import { forkJoin, switchMap, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DetailsService } from './details.service';
 import { TabViewModule } from 'primeng/tabview';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +24,7 @@ import { CarouselModule } from 'primeng/carousel';
 
 
 
-export class DetailsComponent implements AfterViewInit  {
+export class DetailsComponent implements AfterViewInit, OnDestroy  {
   castOpen : boolean = false;
   videoOpen : boolean = false;
   loading : boolean = false;
@@ -33,6 +34,7 @@ export class DetailsComponent implements AfterViewInit  {
   imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
   videos : any[] = []
   isImageLoaded = false;
+  private destroy$ = new Subject<void>();
 
   onImageLoad() {
     this.isImageLoaded = true;
@@ -49,7 +51,9 @@ export class DetailsComponent implements AfterViewInit  {
   ngOnInit() {
     this.loading = true;
 
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(params => {
       const id = params.get('id'); // Access a specific param
       forkJoin([
         this.detailsService.getMovieDetails(id as string),
@@ -63,6 +67,7 @@ export class DetailsComponent implements AfterViewInit  {
       ]).subscribe({
         next: (data) => {
           this.loading = false;
+          const usCertification = data[7].results.find((cert: any) => cert.iso_3166_1 === "US");
           this.movieDetails = {
             justWatch: [],
             title : data[0].original_title || "",
@@ -83,7 +88,7 @@ export class DetailsComponent implements AfterViewInit  {
             cast : data[5].cast.sort((a: any, b: any) => a.order - b.order).map((cast: any) => cast.name) || [],
             castDetails : data[5].cast.sort((a: any, b: any) => a.order - b.order) || [],
             images : [...data[6].backdrops, ...data[6].posters, ...data[6].logos]  ,
-            certification : data[7].results.find((cert: any) => cert.iso_3166_1 === "US") ? data[7].results.find((cert: any) => cert.iso_3166_1 === "US").release_dates[0].certification   : ""
+            certification : usCertification && usCertification.release_dates && usCertification.release_dates[0] ? usCertification.release_dates[0].certification : ""
           };
 
 
@@ -96,10 +101,19 @@ export class DetailsComponent implements AfterViewInit  {
         });
 
           this.videos = this.movieDetails.videos
+        },
+        error: (error) => {
+          this.loading = false;
+          // Handle error silently or show user-friendly message
         }
       })
     });
 
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 
@@ -115,11 +129,9 @@ export class DetailsComponent implements AfterViewInit  {
   }
 
   watchTrailer() {
-    if (this.videosComponent) {
+    if (this.videosComponent && this.movieDetails.videos.length > 0) {
       this.videosComponent.videosGetter(this.movieDetails.videos);
       this.videoOpen = true;
-    } else {
-      console.error("Video is not available");
     }
   }
   showMoreCast() {
@@ -132,11 +144,6 @@ export class DetailsComponent implements AfterViewInit  {
 
 domainGetter(domainFull: string) {
   return domainFull.split("//")[1].split("/")[0];
-}
-
-uniqueId(arr : any[]) {
-  return
-
 }
 
 }
