@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { type Image } from "./mood.interface";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 @Injectable ({
   providedIn: 'root'
@@ -111,7 +111,6 @@ export class MoodService {
   ];
 
   private baseUrl = 'https://api.themoviedb.org/3';
-  private apiKey =import.meta.env['NG_APP_TMDB_API_KEY']
   constructor (private http: HttpClient){}
 
   getImages( ) : Image[] {
@@ -119,12 +118,7 @@ export class MoodService {
   }
 
   getData(page: number, grenr: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': this.apiKey,
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.get(`${this.baseUrl}/discover/movie?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${grenr}&with_original_language=en`, { headers })
+    return this.http.get(`${this.baseUrl}/discover/movie?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${grenr}&with_original_language=en`)
   }
 
 }
