@@ -55,7 +55,6 @@ export class AdvancedComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((newData: { results: any[]; total_pages: number; total_results: number }) => {
-        console.log(newData);
         this.totalResults = newData.total_results;
         this.totalPages = newData.total_pages;
         this.data = [...this.data, ...newData.results];
@@ -107,7 +106,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.page++;
         this.scrollSubject.next(this.page);
-      }, 1300);
+      }, 500);
     }
   }
 

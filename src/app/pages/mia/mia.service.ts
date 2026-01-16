@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import { RealtimeClient } from '@openai/realtime-api-beta';
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable , forkJoin} from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,6 @@ export class MiaService {
 
   private baseUrl = 'https://api.themoviedb.org/3';
   private openaiKey = import.meta.env['NG_APP_OPEN_AI_KEY'];
-  private apiKey = import.meta.env['NG_APP_TMDB_API_KEY'];
 
   constructor (private http: HttpClient){}
 
@@ -47,12 +46,7 @@ return completion.choices[0].message.content;
 
 
   getData(keyword: string[]): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': this.apiKey,
-      'Content-Type': 'application/json'
-    });
-
-    let requests = keyword.map(k => this.http.get(`${this.baseUrl}/search/movie?query=${k}&include_adult=false&language=en-US&page=1`, { headers }));
+    let requests = keyword.map(k => this.http.get(`${this.baseUrl}/search/movie?query=${k}&include_adult=false&language=en-US&page=1`));
     return forkJoin(requests);  }
 
 }

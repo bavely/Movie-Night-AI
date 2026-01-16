@@ -143,7 +143,7 @@ export class MainComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.page++;
         this.scrollSubject.next(this.page);
-      }, 1300);
+      }, 500);
     }
   }
 
