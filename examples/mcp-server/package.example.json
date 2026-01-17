@@ -1,0 +1,31 @@
+{
+  "name": "movie-night-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Movie Night AI - handles movie recommendations via MCP protocol",
+  "main": "dist/http-server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/http-server.js",
+    "dev": "ts-node src/http-server.ts",
+    "mcp": "node dist/index.js",
+    "mcp:dev": "ts-node src/index.ts"
+  },
+  "keywords": ["mcp", "movie", "recommendation", "ai"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "openai": "^4.67.3",
+    "axios": "^1.7.9",
+    "express": "^4.21.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.17",
+    "typescript": "^5.7.2",
+    "ts-node": "^10.9.2"
+  }
+}
