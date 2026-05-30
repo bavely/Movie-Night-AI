@@ -6,8 +6,15 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 loadLocalEnv(path.join(__dirname, ".env"));
+const corsOptions = {
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+};
+app.use(cors(
 
-app.use(cors());
+));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
@@ -174,7 +181,7 @@ app.use((req, res) => {
 });
 
 // Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
 });
