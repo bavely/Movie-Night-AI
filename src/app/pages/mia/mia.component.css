@@ -1,17 +1,303 @@
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-.heading {
-  @apply text-3xl font-bold;
-  color: whitesmoke;
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-shadow: blanchedalmond 1px 0 10px;
-  font-family: 'Aref Ruqaa Ink', serif;
-font-size: 45px;
-filter: drop-shadow(0 0 50px rgba(229,231,235,0.5));
-
+:host {
+  display: block;
+  color: #f8fafc;
 }
 
+.mia-shell {
+  min-height: calc(100vh - 50px);
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(10, 14, 20, 0.82), rgba(10, 14, 20, 0.82)),
+    url("/assets/images/3d-grunge-room-interior-with-spotlight-smoky-atmosphere-background.jpg") center / cover fixed;
+}
+
+.mia-header {
+  height: 112px;
+  flex: 0 0 112px;
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(160px, 2fr) minmax(120px, 1fr);
+  align-items: center;
+  padding: 0 24px;
+  background: rgba(17, 24, 39, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-lockup {
+  grid-column: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.brand-mark {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.88);
+  box-shadow: 0 0 24px rgba(229, 231, 235, 0.55);
+  background: rgba(15, 23, 42, 0.8);
+  overflow: hidden;
+}
+
+.brand-mark img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.assistant-lockup {
+  grid-column: 2;
+  justify-self: center;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.assistant-lockup h1 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.mia-main {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(340px, 0.95fr) minmax(360px, 1.05fr);
+  gap: 16px;
+  padding: 16px 24px 18px;
+}
+
+.chat-panel,
+.suggestions-panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.88);
+}
+
+.chat-scroll,
+.suggestions-scroll {
+  min-height: 0;
+  overflow: auto;
+}
+
+.chat-scroll {
+  flex: 1;
+  padding: 18px 16px;
+}
+
+.message-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.message-row.user-message {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: min(72%, 720px);
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #111827;
+  color: #f8fafc;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.user-message .message-bubble {
+  background: #5b1b61;
+}
+
+.message-bubble p {
+  margin: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+  font-size: 14px;
+}
+
+.message-bubble time {
+  display: block;
+  margin-top: 8px;
+  text-align: right;
+  font-size: 11px;
+  color: rgba(248, 250, 252, 0.7);
+}
+
+.loading-bubble {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-width: 70px;
+  min-height: 38px;
+}
+
+.typing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f8fafc;
+  opacity: 0.45;
+  animation: mia-pulse 1s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.composer {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(17, 24, 39, 0.96);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.composer input {
+  min-width: 0;
+  height: 42px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  border-radius: 6px;
+  padding: 0 12px;
+  color: #111827;
+  background: #ffffff;
+  outline: none;
+}
+
+.composer input:focus {
+  border-color: #facc15;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.2);
+}
+
+.composer button {
+  width: 44px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  color: #111827;
+  background: #facc15;
+  cursor: pointer;
+}
+
+.composer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.suggestions-panel {
+  background: rgba(9, 12, 18, 0.72);
+}
+
+.suggestions-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: rgba(17, 24, 39, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.suggestions-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.suggestions-header span {
+  color: #facc15;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.suggestions-scroll {
+  flex: 1;
+  padding: 18px;
+}
+
+.suggestions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  justify-items: center;
+  align-items: start;
+  gap: 22px 18px;
+}
+
+.empty-suggestions {
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  color: rgba(248, 250, 252, 0.72);
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+}
+
+.empty-suggestions p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@keyframes mia-pulse {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 960px) {
+  .mia-shell {
+    height: auto;
+    min-height: calc(100vh - 50px);
+    overflow: visible;
+  }
+
+  .mia-header {
+    height: auto;
+    min-height: 96px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .brand-lockup,
+  .assistant-lockup {
+    grid-column: 1;
+  }
+
+  .mia-main {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .chat-panel {
+    min-height: 520px;
+  }
+
+  .message-bubble {
+    max-width: 82%;
+  }
+}

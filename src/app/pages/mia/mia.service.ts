@@ -1,8 +1,15 @@
-import OpenAI from "openai";
-import { RealtimeClient } from '@openai/realtime-api-beta';
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
-import { Observable , forkJoin} from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, firstValueFrom, forkJoin, map, Observable, of } from 'rxjs';
+
+interface MiaAgentResponse {
+  outputText: string;
+}
+
+interface TmdbSearchResponse {
+  results: any[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,43 +17,60 @@ import { Observable , forkJoin} from 'rxjs';
 export class MiaService {
 
   private baseUrl = 'https://api.themoviedb.org/3';
-  private openaiKey = import.meta.env['NG_APP_OPEN_AI_KEY'];
-
   constructor (private http: HttpClient){}
 
-  async openAiCall( prompt: string) {
-    const openai = new OpenAI({
-      apiKey: this.openaiKey,
-      dangerouslyAllowBrowser: true
-    }
-    );
-    // { role: "system", content: "You are a helpful assistant." },
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-             content: `You are a movie recommendation bot. Based on the user's prompt, recommend 3 movie titles in an array format like:
-{
-  "movies": ["Movie Title 1", "Movie Title 2", "Movie Title 3"],
-  "fullResponse": "Here are some movies you might like: Movie Title 1, Movie Title 2, Movie Title 3. You can ask for more details about any of these movies."
-}`
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ]
-    });
+  async openAiCall(prompt: string): Promise<string> {
+    try {
+      const response = await firstValueFrom(
+        this.http.post<MiaAgentResponse>('/api/mia', { prompt })
+      );
 
-return completion.choices[0].message.content;
+      return response.outputText ?? '';
+    } catch (error) {
+      throw new Error(this.getMiaErrorMessage(error));
+    }
+  }
+
+  private getMiaErrorMessage(error: unknown): string {
+    if (error instanceof HttpErrorResponse) {
+      if (typeof error.error === 'string' && error.error.trim()) {
+        return error.error;
+      }
+
+      if (typeof error.error?.details === 'string' && error.error.details.trim()) {
+        return error.error.details;
+      }
+
+      if (typeof error.error?.error === 'string' && error.error.error.trim()) {
+        return error.error.error;
+      }
+    }
+
+    return "Sorry, I couldn't get a response from MIA right now.";
   }
 
 
+  getSuggestedMovies(titles: string[]): Observable<any[]> {
+    const uniqueTitles = [...new Set(titles.map(title => title.trim()).filter(Boolean))].slice(0, 8);
 
+    if (!uniqueTitles.length) {
+      return of([]);
+    }
 
-  getData(keyword: string[]): Observable<any> {
-    let requests = keyword.map(k => this.http.get(`${this.baseUrl}/search/movie?query=${k}&include_adult=false&language=en-US&page=1`));
-    return forkJoin(requests);  }
+    const requests = uniqueTitles.map(title =>
+      this.http.get<TmdbSearchResponse>(
+        `${this.baseUrl}/search/movie?query=${encodeURIComponent(title)}&include_adult=false&language=en-US&page=1`
+      ).pipe(
+        map(response => response.results?.[0] ?? null),
+        catchError(error => {
+          console.error(`Movie lookup failed for "${title}"`, error);
+          return of(null);
+        })
+      )
+    );
 
+    return forkJoin(requests).pipe(
+      map(movies => movies.filter(Boolean))
+    );
+  }
 }
