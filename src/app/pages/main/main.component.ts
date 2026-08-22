@@ -11,8 +11,8 @@ import { MainService } from './main.service';
 import { MoviecontainerComponent } from '../../component/common/moviecontainer/moviecontainer.component';
 import { DividerModule } from 'primeng/divider';
 import { CategoryComponent } from '../../component/category/category.component';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject, of } from 'rxjs';
+import { debounceTime, switchMap, takeUntil, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -37,6 +37,7 @@ export class MainComponent implements OnInit, OnDestroy {
   category: string = '';
   discoverMore = false;
   loading = true;
+  error = false;
 
   private scrollSubject = new BehaviorSubject<number>(this.page);
   private destroy$ = new Subject<void>();
@@ -55,17 +56,26 @@ export class MainComponent implements OnInit, OnDestroy {
         debounceTime(300),
         switchMap((page) => {
           this.loading = true;
+          let req;
           if (this.category === 'popular') {
-            return this.mainService.getPopularData(page);
+            req = this.mainService.getPopularData(page);
           } else if (this.category === 'top_rated') {
-            return this.mainService.getTopRatedData(page);
+            req = this.mainService.getTopRatedData(page);
           } else {
-            return this.mainService.getUpcomingData(page);
+            req = this.mainService.getUpcomingData(page);
           }
+          return req.pipe(
+            catchError(() => {
+              this.loading = false;
+              this.error = true;
+              return of({ results: [], total_pages: 0 });
+            })
+          );
         }),
         takeUntil(this.destroy$)
       )
       .subscribe((newData: { results: any[]; total_pages: number }) => {
+        if (newData.results.length > 0) this.error = false;
         this.totalPages = newData.total_pages;
 
         if (this.category === 'popular') {
@@ -77,8 +87,6 @@ export class MainComponent implements OnInit, OnDestroy {
         }
 
         this.loading = false;
-
-        // ✅ Auto-load more if the screen is too tall
         setTimeout(() => this.checkAndLoadMore(), 200);
       });
 
@@ -91,17 +99,29 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   fetchInitialData(): void {
-    this.mainService.getPopularData(1).subscribe((data) => {
-      this.popularMovies = data.results.slice(0, 8);
+    this.mainService.getPopularData(1).subscribe({
+      next: (data) => { this.popularMovies = data.results.slice(0, 8); },
+      error: () => { this.error = true; this.loading = false; }
     });
 
-    this.mainService.getTopRatedData(1).subscribe((data) => {
-      this.topRatedMovies = data.results.slice(0, 8);
+    this.mainService.getTopRatedData(1).subscribe({
+      next: (data) => { this.topRatedMovies = data.results.slice(0, 8); },
+      error: () => { this.error = true; this.loading = false; }
     });
 
-    this.mainService.getUpcomingData(1).subscribe((data) => {
-      this.upcomingMovies = data.results.slice(0, 8);
+    this.mainService.getUpcomingData(1).subscribe({
+      next: (data) => { this.upcomingMovies = data.results.slice(0, 8); },
+      error: () => { this.error = true; this.loading = false; }
     });
+  }
+
+  retryInitial(): void {
+    this.error = false;
+    this.loading = true;
+    this.popularMovies = [];
+    this.topRatedMovies = [];
+    this.upcomingMovies = [];
+    this.fetchInitialData();
   }
 
   getMoreMovies(cat: string): void {

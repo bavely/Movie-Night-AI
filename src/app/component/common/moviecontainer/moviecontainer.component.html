@@ -17,13 +17,15 @@
       [class.image-loaded]="isImageLoaded"
       loading="lazy"
       (load)="onImageLoad()"
+      (error)="onImageError($event)"
     />
-    <div
-      class="rounded-md opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-4 bottom-28 flex justify-center items-end text-xl bg-gray-200 text-black font-semibold"
+    <button
+      class="rounded-md opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-4 bottom-28 flex justify-center items-end text-xl bg-gray-200 text-black font-semibold border-0"
       (click)="goToMovie(movie)"
+      [attr.aria-label]="'Watch ' + movie.title"
     >
       Watch Now
-    </div>
+    </button>
   </div>
 
   <p

@@ -1,4 +1,4 @@
-import { Component,  OnInit} from '@angular/core';
+import { Component, HostListener, OnInit} from '@angular/core';
 import { SafeurlPipe } from '../common/safeurl.pipe';
 @Component({
   selector: 'app-videos',
@@ -22,11 +22,16 @@ export class VideosComponent implements OnInit {
   }
   ngOnInit(): void {
   }
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape' && this.open) this.close();
+  }
+
   close() {
-    this.open = false
-    this.videosUrls = []
-    this.TrailerUrl = ""
-    this.videos = []
+    this.open = false;
+    this.videosUrls = [];
+    this.TrailerUrl = '';
+    this.videos = [];
   }
 
   videosGetter(videos : any[]) {

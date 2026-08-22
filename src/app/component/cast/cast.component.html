@@ -11,7 +11,7 @@
             <div class="grid grid-cols-2 gap-2">
               @for(cast of castDetails; track $index) {
                 <div class="flex flex-col gap-2">
-                <img class="h-50 w-40"  [alt]="cast.name" [src]="imagBaseUrl + cast.profile_path | safeurl">
+                <img class="h-50 w-40" [alt]="cast.name" [src]="imagBaseUrl + cast.profile_path | safeurl" (error)="onImageError($event)">
                 <p class="text-white text-sm text-center">{{ cast.name }}</p>
               </div>
               }

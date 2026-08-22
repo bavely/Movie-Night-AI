@@ -10,8 +10,8 @@ import { gsap } from 'gsap';
 import { Router } from '@angular/router';
 import { ListComponent } from '../../component/common/list/list.component';
 import { AdvancedService } from './advanced.service';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject, of } from 'rxjs';
+import { debounceTime, switchMap, takeUntil, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-advanced',
@@ -31,6 +31,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
   keyword = '';
   inputs = '';
   loading = true;
+  error = false;
 
   private scrollSubject = new BehaviorSubject<number>(this.page);
   private destroy$ = new Subject<void>();
@@ -50,17 +51,25 @@ export class AdvancedComponent implements OnInit, OnDestroy {
         debounceTime(300),
         switchMap((page) => {
           this.loading = true;
-          return this.advancedserv.getData(page, this.keyword);
+          return this.advancedserv.getData(page, this.keyword).pipe(
+            catchError(() => {
+              this.loading = false;
+              this.error = true;
+              return of({ results: [], total_pages: 0, total_results: 0 });
+            })
+          );
         }),
         takeUntil(this.destroy$)
       )
       .subscribe((newData: { results: any[]; total_pages: number; total_results: number }) => {
+        if (newData.results.length > 0 || newData.total_pages > 0) {
+          this.error = false;
+        }
         this.totalResults = newData.total_results;
         this.totalPages = newData.total_pages;
         this.data = [...this.data, ...newData.results];
         this.loading = false;
 
-        // Ensure loading more if viewport is larger than content
         setTimeout(() => this.checkAndLoadMore(), 200);
       });
   }
@@ -115,11 +124,21 @@ export class AdvancedComponent implements OnInit, OnDestroy {
   }
 
   search(): void {
-    this.keyword = this.inputs;
+    const trimmed = this.inputs.trim();
+    if (!trimmed) return;
+    this.keyword = trimmed;
+    this.data = [];
+    this.page = 1;
+    this.error = false;
+    this.loadData();
+    localStorage.setItem('keyword', this.keyword);
+  }
+
+  retry(): void {
+    this.error = false;
     this.data = [];
     this.page = 1;
     this.loadData();
-    localStorage.setItem('keyword', this.keyword);
   }
 
   // ✅ Ensures content fills the viewport even on larger screens

@@ -7,8 +7,8 @@ import {
 import { Router } from '@angular/router';
 import { MoodService } from './mood.service';
 import { type Image } from './mood.interface';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject, of } from 'rxjs';
+import { debounceTime, switchMap, takeUntil, catchError } from 'rxjs/operators';
 import { ListComponent } from '../../component/common/list/list.component';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
@@ -33,6 +33,7 @@ export class MoodComponent implements OnInit, OnDestroy {
   public grenr = 53;
   public grenrName = '';
   public loading = true;
+  public error = false;
   public imagBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
   public responsiveOptions = [
@@ -62,17 +63,25 @@ export class MoodComponent implements OnInit, OnDestroy {
         debounceTime(300),
         switchMap((page) => {
           this.loading = true;
-          return this.moodserv.getData(page, this.grenr.toString());
+          return this.moodserv.getData(page, this.grenr.toString()).pipe(
+            catchError(() => {
+              this.loading = false;
+              this.error = true;
+              return of({ results: [], total_pages: 0, total_results: 0 });
+            })
+          );
         }),
         takeUntil(this.destroy$)
       )
       .subscribe((newData: { results: any[]; total_pages: number, total_results: number }) => {
+        if (newData.results.length > 0 || newData.total_pages > 0) {
+          this.error = false;
+        }
         this.totalPages = newData.total_pages;
         this.totalResults = newData.total_results;
         this.data = [...this.data, ...newData.results];
         this.loading = false;
 
-        // Auto-load more if content is short
         setTimeout(() => this.checkAndLoadMore(), 200);
       });
   }
@@ -91,8 +100,16 @@ export class MoodComponent implements OnInit, OnDestroy {
     this.grenrName = image.name;
     this.data = [];
     this.page = 1;
+    this.error = false;
     this.loadData();
     localStorage.setItem('mood', this.grenr.toString());
+  }
+
+  retry(): void {
+    this.error = false;
+    this.data = [];
+    this.page = 1;
+    this.loadData();
   }
 
   goBack(): void {

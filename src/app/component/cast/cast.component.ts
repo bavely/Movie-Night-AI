@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SafeurlPipe } from "../common/safeurl.pipe";
 
 @Component({
@@ -17,14 +17,23 @@ imagBaseUrl = 'https://image.tmdb.org/t/p/original/'
   constructor(  ) { }
 
 
-  close() {
-    this.open = false
-   this.castDetails = []
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape' && this.open) this.close();
   }
 
-  castGetter(cast : any[]) {
-    this.castDetails = cast
-    this.open = true
+  close() {
+    this.open = false;
+    this.castDetails = [];
+  }
+
+  castGetter(cast: any[]) {
+    this.castDetails = cast;
+    this.open = true;
+  }
+
+  onImageError(event: Event) {
+    (event.target as HTMLImageElement).src = 'assets/images/no-poster-available.webp';
   }
 
 }

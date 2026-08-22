@@ -54,6 +54,20 @@ body {
   filter: none;
 }
 
+:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 2px;
+}
+
 
 
 

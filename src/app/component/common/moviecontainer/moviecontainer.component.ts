@@ -25,6 +25,10 @@ export class MoviecontainerComponent {
     this.isImageLoaded = true;
   }
 
+  onImageError(event: Event) {
+    (event.target as HTMLImageElement).src = 'assets/images/no-poster-available.webp';
+  }
+
   constructor( private router: Router) {
 
 
