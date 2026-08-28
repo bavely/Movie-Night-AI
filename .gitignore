@@ -43,6 +43,10 @@ Thumbs.db
 
 .env
 
+# MCP Server (if created locally)
+/mcp-server/node_modules
+/mcp-server/dist
+/mcp-server/.env
 
 
 .nx/cache

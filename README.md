@@ -27,3 +27,17 @@ npm run dev
 - Get sugested movies based on your previous searchs
 - Using AI assistant for movie suggestion
 
+## MCP Integration (Model Context Protocol)
+
+Want to integrate Claude AI or enhance the AI assistant with MCP server?
+
+📚 **See the guides:**
+- [Quick Start Guide](./QUICK_START_MCP.md) - 5-minute setup
+- [Full Integration Guide](./MCP_INTEGRATION_GUIDE.md) - Complete documentation
+
+**What you'll get:**
+- ✅ Secure AI integration (API keys on server, not browser)
+- ✅ Use with Claude Desktop app
+- ✅ Same UI, better architecture
+- ✅ Easy to switch between AI providers
+
